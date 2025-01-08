@@ -146,11 +146,23 @@ void adc_sel_pin(u8 adc_pin)
     case ADC_PIN_P00_AN0:
         ADCR0 &= ~(0x0F << 4); // 清空寄存器的通道选择位
         // 清空后的通道就是 AIN0--P00
+
+        // 下面这种写法更占用程序空间：
+        // ADCHS3 = 0;
+        // ADCHS2 = 0;
+        // ADCHS1 = 0;
+        // ADCHS0 = 0;
         break;
 
     case ADC_PIN_P02_AN1:
         ADCR0 &= ~(0x0F << 4); // 清空寄存器的通道选择位
         ADCR0 |= 0x01 << 4;    // AIN1--P02;
+
+        // 下面这种写法更占用程序空间：
+        // ADCHS3 = 0;
+        // ADCHS2 = 0;
+        // ADCHS1 = 0;
+        // ADCHS0 = 1;
         break;
 
     default:
@@ -270,165 +282,402 @@ void Sys_Init(void)
     key_config();
     adc_config();
 
+    // 关闭所有指示灯
+    LED_WORKING_OFF();
+    LED_FULL_CHARGE_OFF();
+    LED_CHARGING_OFF();
+
     GIE = 1;
 }
 
-// 按键扫描函数
-void key_scan_handle(void)
+// 获取按键对应的键值(id)
+// u8 get_key_id(void)
+// {
+//     u8 ret = KEY_ID_NONE;
+//     if (0 == KEY_MODE_PIN)
+//     {
+//         ret = KEY_ID_MODE;
+//     }
+//     else if (0 == KEY_HEAT_PIN)
+//     {
+//         ret = KEY_ID_HEAT;
+//     }
+
+//     return ret;
+// }
+
+// 按键扫描函数，最后会得到对应的按键事件
+// 需要放在10ms的定时器中
+void key_scan(void)
 {
+    static volatile u8 last_key_id = KEY_ID_NONE;
+    static volatile u8 press_cnt = 0;               // 按键按下的时间计数
+    static volatile u8 filter_cnt = 0;              // 按键消抖，使用的变量
+    static volatile u8 filter_key_id = KEY_ID_NONE; // 按键消抖时使用的变量
+    // volatile u8 cur_key_id = get_key_id();          // 获取当前按键的键值(id)
+    volatile u8 cur_key_id = KEY_ID_NONE;
+
+    static volatile u8 flag_is_key_mode_hold = 0;
+
     if (0 == KEY_MODE_PIN)
     {
-        // 标志位，用于 开机/模式 按键的长按和松手
-        // 0--按键未松手,1--按键已经松手
-        static volatile u8 flag_is_key_mode_hold = 0;
-        u16 press_cnt = 0;
-
-        delay_ms(20); // 延时消抖
-
-        if (0 == KEY_MODE_PIN)
-        {
-            // 如果确定按键按下
-            while (0 == KEY_MODE_PIN)
-            {
-                // 等待按键松手
-                if (press_cnt < 65535)
-                    press_cnt++;
-
-                if (0 == FLAG_IS_DEVICE_OPEN)
-                {
-                    if (press_cnt >= 1000) // 1000ms加上看门狗唤醒的1024ms
-                    {
-                        // 如果长按了2s
-                        // 如果之前检测到没有按下该按键，才进入：
-                        if (0 == flag_is_key_mode_hold)
-                        {
-                            flag_is_key_mode_hold = 1; // 表示按键按下后未松手
-
-                            // 如果未开机，
-                            // 电池电压大于 xxV 允许开机，关机->开机
-                            LED_FULL_CHARGE_OFF(); // 关闭满电指示灯
-                            LED_CHARGING_OFF();    // 关闭充电指示灯
-                            LED_WORKING_ON();      // 打开电源指示灯
-                            FLAG_IS_DEVICE_OPEN = 1;
-
-                            // 设定正转、反转的PWM的初始占空比
-                            // T0DATA = 115;
-                            // T1DATA = 115; // 约为 89.9%
-                            T0DATA = 103;
-                            T1DATA = 103;       // 约为 80.5%
-                            mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
-
-                            // 打开控制正转的PWM
-                            PWM0EC = 1;
-                            break;
-                        }
-                    }
-                }
-                else // 如果当前设备是开启的
-                {
-                    if (press_cnt >= 2000)
-                    {
-                        // 如果之前检测到没有按下该按键，才进入：
-                        if (0 == flag_is_key_mode_hold)
-                        {
-                            flag_is_key_mode_hold = 1; // 表示按键按下后未松手
-
-                            // 开机->关机
-                            LED_WORKING_OFF(); // 关闭电源指示灯
-                            HEATING_OFF();     // 关闭加热
-                            FLAG_IS_DEVICE_OPEN = 0;
-                            FLAG_IS_HEATING = 0;
-
-                            mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
-
-                            // 关闭 正转和反转的PWM
-                            PWM0EC = 0;
-                            PWM1EC = 0;
-
-                            break;
-                        }
-                    }
-                }
-
-                delay_ms(1);
-            } // while (0 == KEY_MODE_PIN) 等待按键松手
-
-            flag_is_key_mode_hold = 0; // 表示该按键已经松手
-
-            if (press_cnt < 750)
-            {
-                // 如果是短按
-                if (FLAG_IS_DEVICE_OPEN)
-                {
-                    // 初始为 80.5%占空比，每按一次 从 80.5%->89.9%->100%->80.5%->...这样变化
-                    if (FLAG_IS_DEVICE_OPEN)
-                    {
-                        // 如果开机，才切换模式
-                        if (MODE_1 == mode_flag)
-                        {
-                            // 设置PWM的占空比
-                            T0DATA = 115;
-                            T1DATA = 115; // 89.9%占空比
-
-                            mode_flag = MODE_2;
-                        }
-                        else if (MODE_2 == mode_flag)
-                        {
-                            // 设置PWM的占空比
-                            T0DATA = 255;
-                            T1DATA = 255; // 100%占空比（确保大于TxLOAD的值就可以）
-
-                            mode_flag = MODE_3;
-                        }
-                        else if (MODE_3 == mode_flag)
-                        {
-                            // 设置PWM的占空比
-                            T0DATA = 103;
-                            T1DATA = 103; // 80.5%占空比
-                            mode_flag = MODE_1;
-                        }
-                    }
-                }
-            }
-        }
+        cur_key_id = KEY_ID_MODE;
     }
     else if (0 == KEY_HEAT_PIN)
     {
-        u16 press_cnt = 0;
+        cur_key_id = KEY_ID_HEAT;
+    }
 
-        delay_ms(20); // 延时消抖
-        if (0 == KEY_HEAT_PIN)
+    if (cur_key_id != filter_key_id)
+    {
+        // 如果有按键按下/松开
+        filter_cnt = 0;
+        filter_key_id = cur_key_id;
+        return;
+    }
+
+    if (filter_cnt < KEY_FILTER_TIMES)
+    {
+        // 如果检测到相同的按键按下/松开
+        // 防止计数溢出
+        filter_cnt++;
+        return;
+    }
+
+    // 滤波/消抖完成后，执行到这里
+
+    if (last_key_id != cur_key_id)
+    {
+        if (last_key_id == KEY_ID_NONE)
         {
-            //  如果确定是按键按下
-            while (0 == KEY_HEAT_PIN)
+            // 如果有按键按下，清除按键按下的时间计数
+            press_cnt = 0;
+        }
+        else if (cur_key_id == KEY_ID_NONE)
+        {
+            // 如果按键松开
+            if (press_cnt < 75)
             {
-                // 等待按键松手
-                if (press_cnt < 65535)
-                    press_cnt++;
-                delay_ms(1);
-            }
-
-            if (press_cnt < 750)
-            {
-                // 如果是短按
-                if (FLAG_IS_DEVICE_OPEN)
+                // 按下时间小于 750ms ，是短按
+                if (KEY_ID_MODE == last_key_id)
                 {
-                    // 如果设备已经处于工作状态，才可以打开加热
-                    if (0 == FLAG_IS_HEATING)
-                    {
-                        HEATING_ON(); // 打开加热
-                        FLAG_IS_HEATING = 1;
-                    }
-                    else
-                    {
-                        HEATING_OFF(); // 关闭加热
-                        FLAG_IS_HEATING = 0;
-                    }
+                    // 开关/模式按键短按
+                    key_event = KEY_EVENT_MODE_PRESS;
+
+                    // PWM0EC = 0;
+                    // P16OE = 1;
+                    // DEBUG_PIN = ~DEBUG_PIN;
+                }
+                else if (KEY_ID_HEAT == last_key_id)
+                {
+                    // 加热按键短按
+                    key_event = KEY_EVENT_HEAT_PRESS;
+                }
+            }
+            else
+            {
+                // 长按、长按持续之后松手
+                // key_event = KEY_EVENT_NONE;
+
+                flag_is_key_mode_hold = 0;
+            }
+        }
+    }
+    else if (cur_key_id != KEY_ID_NONE)
+    {
+        // 如果按键按住不放
+        if (press_cnt < 255)
+            press_cnt++;
+
+        if (FLAG_IS_DEVICE_OPEN)
+        {
+            if (press_cnt >= 200) // 2000ms
+            {
+                if (flag_is_key_mode_hold)
+                {
+                }
+                else
+                {
+                    key_event = KEY_EVENT_MODE_HOLD;
+                    flag_is_key_mode_hold = 1;
+                }
+            }
+        }
+        else
+        {
+            // 如果当前设备是关闭的
+            if (press_cnt >= 100) // 1000ms加上看门狗唤醒的1024ms
+            {
+                if (flag_is_key_mode_hold)
+                {
+                }
+                else
+                {
+                    key_event = KEY_EVENT_MODE_HOLD;
+                    flag_is_key_mode_hold = 1;
                 }
             }
         }
     }
+
+    last_key_id = cur_key_id;
 }
+
+// 对扫描到的按键事件进行处理
+void key_event_handle(void)
+{  
+    if (FLAG_IS_DEVICE_OPEN)
+    {
+        // 如果设备正在运行
+        if (KEY_EVENT_MODE_HOLD == key_event)
+        {
+            LED_WORKING_OFF(); // 关闭电源指示灯
+            HEATING_OFF();     // 关闭加热
+            FLAG_IS_DEVICE_OPEN = 0;
+            FLAG_IS_HEATING = 0;
+
+            if (flag_is_low_battery)
+            {
+                // 如果关机前处于低电量报警的状态
+                LED_CHARGING_OFF(); // 关闭用于报警的LED
+                flag_is_low_battery = 0;
+            }
+
+            mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
+
+            // 关闭 正转和反转的PWM
+            PWM0EC = 0;
+            PWM1EC = 0;
+        }
+        else if (KEY_EVENT_MODE_PRESS == key_event)
+        {  
+            if (MODE_1 == mode_flag)
+            {
+                // 设置PWM的占空比
+                T0DATA = 115;
+                T1DATA = 115; // 89.9%占空比
+
+                mode_flag = MODE_2;
+            }
+            else if (MODE_2 == mode_flag)
+            {
+                // 设置PWM的占空比
+                T0DATA = 255;
+                T1DATA = 255; // 100%占空比（确保大于TxLOAD的值就可以）
+
+                mode_flag = MODE_3;
+            }
+            else if (MODE_3 == mode_flag)
+            {
+                // 设置PWM的占空比
+                T0DATA = 103;
+                T1DATA = 103; // 80.5%占空比
+                mode_flag = MODE_1;
+            }
+        }
+        else if (KEY_EVENT_HEAT_PRESS == key_event)
+        {
+            if (0 == FLAG_IS_HEATING)
+            {
+                HEATING_ON(); // 打开加热
+                FLAG_IS_HEATING = 1;
+            }
+            else
+            {
+                HEATING_OFF(); // 关闭加热
+                FLAG_IS_HEATING = 0;
+            }
+        }
+    }
+    else
+    {
+        // 如果设备没有在运行
+        if (KEY_EVENT_MODE_HOLD == key_event)
+        {
+            LED_FULL_CHARGE_OFF(); // 关闭满电指示灯
+            LED_CHARGING_OFF();    // 关闭充电指示灯
+            LED_WORKING_ON();      // 打开电源指示灯
+            FLAG_IS_DEVICE_OPEN = 1;
+
+            // 设定正转、反转的PWM的初始占空比
+            // T0DATA = 115;
+            // T1DATA = 115; // 约为 89.9%
+            T0DATA = 103;
+            T1DATA = 103;       // 约为 80.5%
+            mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
+
+            // 打开控制正转的PWM
+            PWM0EC = 1;
+        }
+    }
+
+    // 处理完成后，清除按键事件
+    key_event = KEY_EVENT_NONE;
+}
+
+// // 按键扫描函数
+// void key_scan_handle(void)
+// {
+//     if (0 == KEY_MODE_PIN)
+//     {
+//         // 标志位，用于 开机/模式 按键的长按和松手
+//         // 0--按键未松手,1--按键已经松手
+//         static volatile u8 flag_is_key_mode_hold = 0;
+//         u16 press_cnt = 0;
+
+//         delay_ms(20); // 延时消抖
+
+//         if (0 == KEY_MODE_PIN)
+//         {
+//             // 如果确定按键按下
+//             while (0 == KEY_MODE_PIN)
+//             {
+//                 // 等待按键松手
+//                 if (press_cnt < 65535)
+//                     press_cnt++;
+
+//                 if (0 == FLAG_IS_DEVICE_OPEN)
+//                 {
+//                     if (press_cnt >= 1000) // 1000ms加上看门狗唤醒的1024ms
+//                     {
+//                         // 如果长按了2s
+//                         // 如果之前检测到没有按下该按键，才进入：
+//                         if (0 == flag_is_key_mode_hold)
+//                         {
+//                             flag_is_key_mode_hold = 1; // 表示按键按下后未松手
+
+//                             // 如果未开机，
+//                             // 电池电压大于 xxV 允许开机，关机->开机
+//                             LED_FULL_CHARGE_OFF(); // 关闭满电指示灯
+//                             LED_CHARGING_OFF();    // 关闭充电指示灯
+//                             LED_WORKING_ON();      // 打开电源指示灯
+//                             FLAG_IS_DEVICE_OPEN = 1;
+
+//                             // 设定正转、反转的PWM的初始占空比
+//                             // T0DATA = 115;
+//                             // T1DATA = 115; // 约为 89.9%
+//                             T0DATA = 103;
+//                             T1DATA = 103;       // 约为 80.5%
+//                             mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
+
+//                             // 打开控制正转的PWM
+//                             PWM0EC = 1;
+//                             // break; // 不能跳出循环，否则会进入 FLAG_IS_DEVICE_OPEN == 1 的条件，又把设备关闭了
+//                         }
+//                     }
+//                 }
+//                 else // 如果当前设备是开启的
+//                 {
+//                     if (press_cnt >= 2000)
+//                     {
+//                         // 如果之前检测到没有按下该按键，才进入：
+//                         if (0 == flag_is_key_mode_hold)
+//                         {
+//                             flag_is_key_mode_hold = 1; // 表示按键按下后未松手
+
+//                             // 开机->关机
+//                             LED_WORKING_OFF(); // 关闭电源指示灯
+//                             HEATING_OFF();     // 关闭加热
+//                             FLAG_IS_DEVICE_OPEN = 0;
+//                             FLAG_IS_HEATING = 0;
+
+//                             if (flag_is_low_battery)
+//                             {
+//                                 // 如果关机前处于低电量报警的状态
+//                                 LED_CHARGING_OFF(); // 关闭用于报警的LED
+//                                 flag_is_low_battery = 0;
+//                             }
+
+//                             mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
+
+//                             // 关闭 正转和反转的PWM
+//                             PWM0EC = 0;
+//                             PWM1EC = 0;
+
+//                             // break; // 不能跳出循环，否则会进入 FLAG_IS_DEVICE_OPEN == 0 的条件，又把设备开启了
+//                         }
+//                     }
+//                 }
+
+//                 delay_ms(1);
+//             } // while (0 == KEY_MODE_PIN) 等待按键松手
+
+//             flag_is_key_mode_hold = 0; // 表示该按键已经松手
+
+//             if (press_cnt < 750)
+//             {
+//                 // 如果是短按
+//                 if (FLAG_IS_DEVICE_OPEN)
+//                 {
+//                     // 初始为 80.5%占空比，每按一次 从 80.5%->89.9%->100%->80.5%->...这样变化
+//                     if (FLAG_IS_DEVICE_OPEN)
+//                     {
+//                         // 如果开机，才切换模式
+//                         if (MODE_1 == mode_flag)
+//                         {
+//                             // 设置PWM的占空比
+//                             T0DATA = 115;
+//                             T1DATA = 115; // 89.9%占空比
+
+//                             mode_flag = MODE_2;
+//                         }
+//                         else if (MODE_2 == mode_flag)
+//                         {
+//                             // 设置PWM的占空比
+//                             T0DATA = 255;
+//                             T1DATA = 255; // 100%占空比（确保大于TxLOAD的值就可以）
+
+//                             mode_flag = MODE_3;
+//                         }
+//                         else if (MODE_3 == mode_flag)
+//                         {
+//                             // 设置PWM的占空比
+//                             T0DATA = 103;
+//                             T1DATA = 103; // 80.5%占空比
+//                             mode_flag = MODE_1;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     else if (0 == KEY_HEAT_PIN)
+//     {
+//         u16 press_cnt = 0;
+
+//         delay_ms(20); // 延时消抖
+//         if (0 == KEY_HEAT_PIN)
+//         {
+//             //  如果确定是按键按下
+//             while (0 == KEY_HEAT_PIN)
+//             {
+//                 // 等待按键松手
+//                 if (press_cnt < 65535)
+//                     press_cnt++;
+//                 delay_ms(1);
+//             }
+
+//             if (press_cnt < 750)
+//             {
+//                 // 如果是短按
+//                 if (FLAG_IS_DEVICE_OPEN)
+//                 {
+//                     // 如果设备已经处于工作状态，才可以打开加热
+//                     if (0 == FLAG_IS_HEATING)
+//                     {
+//                         HEATING_ON(); // 打开加热
+//                         FLAG_IS_HEATING = 1;
+//                     }
+//                     else
+//                     {
+//                         HEATING_OFF(); // 关闭加热
+//                         FLAG_IS_HEATING = 0;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 void adc_scan_handle(void)
 {
@@ -541,7 +790,8 @@ void adc_scan_handle(void)
             }
         }
 
-        key_scan_handle(); // 按键扫描和处理函数
+        // key_scan_handle(); // 按键扫描和处理函数
+        key_event_handle();
     } // for (i = 0; i < 10; i++)
 
     cnt = 0;
@@ -652,7 +902,8 @@ void adc_scan_handle(void)
             } // if (cnt >= 8)
         }
 
-        key_scan_handle(); // 按键扫描和处理函数
+        // key_scan_handle(); // 按键扫描和处理函数
+        key_event_handle();
     } // for (i = 0; i < 10; i++)
 }
 
@@ -722,24 +973,28 @@ void shutdown_scan_handle(void)
 
 void low_power_scan_handle(void)
 {
-    if (FLAG_DURING_CHARGING_BAT_IS_NULL) // 只插着充电器且没有电池时，不进入低功耗
+    // if (FLAG_DURING_CHARGING_BAT_IS_NULL) // 只插着充电器且没有电池时，不进入低功耗
+    if (FLAG_DURING_CHARGING_BAT_IS_NULL ||
+        FLAG_IS_DEVICE_OPEN || // 如果设备已经启动，不进入低功耗
+        FLAG_IS_IN_CHARGING || // 如果正在充电，不进入低功耗，因为还需要输出PWM来控制充电
+        0 == P01D)             // 如果检测到 开关/模式 按键按下，不进入低功耗(交给按键事件处理函数来判断是否要开机)
     {
         return;
     }
 
-    if (FLAG_IS_DEVICE_OPEN)
-    {
-        // 如果设备已经启动，不进入低功耗
-        return;
-    }
+    // if (FLAG_IS_DEVICE_OPEN)
+    // {
+    //     // 如果设备已经启动，不进入低功耗
+    //     return;
+    // }
 
-    // 如果运行到这里，说明设备没有启动
-    // 可能需要考虑正在充电的情况
-    if (FLAG_IS_IN_CHARGING)
-    {
-        // 如果正在充电，不进入低功耗，因为还需要输出PWM来控制充电
-        return;
-    }
+    // // 如果运行到这里，说明设备没有启动
+    // // 可能需要考虑正在充电的情况
+    // if (FLAG_IS_IN_CHARGING)
+    // {
+    //     // 如果正在充电，不进入低功耗，因为还需要输出PWM来控制充电
+    //     return;
+    // }
 
 label:
     GIE = 0;  // 禁用所有中断
@@ -754,7 +1009,7 @@ label:
     T2DATA = 0;
     ADEN = 0; // 不使能ad
 
-    // LED脚配置为输入模式：
+    // LED脚配置为输入模式（从外部来看，相当于高阻态）：
     P14OE = 0;
     P04OE = 0;
     P03OE = 0;
@@ -770,7 +1025,7 @@ label:
     HFEN = 0; // 关闭高速时钟
     LFEN = 1;
 
-    // 休眠前关闭外设 AD等 使能唤醒条件键盘中断
+    // 休眠前关闭外设
     Nop();
     Nop();
     Stop();
@@ -784,7 +1039,8 @@ label:
     adc_config();
     adc_sel_pin(ADC_PIN_P00_AN0);
     adc_val = adc_get_val_once();
-    if (adc_val < ADCDETECT_CHARING_THRESHOLD && P01D) // 如果按下开机按键/插入充电器，不会满足条件
+    // 如果按下开机按键/插入充电器，不会满足条件：
+    if (adc_val < ADCDETECT_CHARING_THRESHOLD && P01D)
     {
         // 如果没有按下开机按键、没有插入充电器
         // 关闭ADC，继续进入休眠：
@@ -811,10 +1067,6 @@ label:
     // FLAG_IS_NOT_OPEN_DEVICE = 0;
 
     Sys_Init();
-
-    LED_WORKING_OFF();
-    LED_FULL_CHARGE_OFF();
-    LED_CHARGING_OFF();
     GIE = 1;
 
     delay_ms(100); // 等待系统稳定
@@ -823,11 +1075,6 @@ label:
 void main(void)
 {
     Sys_Init();
-
-    // 关闭所有指示灯
-    LED_WORKING_OFF();
-    LED_FULL_CHARGE_OFF();
-    LED_CHARGING_OFF();
 
     delay_ms(100); // 等待系统稳定
 
@@ -869,8 +1116,9 @@ void main(void)
         // DEBUG_PIN = ~DEBUG_PIN; // 测试主循环是否正常
 
         // P10D = 1; // 测试一次循环所需的时间
-        key_scan_handle(); // 按键扫描和处理函数
-        adc_scan_handle(); // 充电扫描和处理函数(约占用89ms)
+        // key_scan_handle(); // 按键扫描和处理函数
+        key_event_handle(); // 按键事件处理函数，扫描在中断服务函数内执行
+        adc_scan_handle();  // 充电扫描和处理函数(约占用89ms)
 
         turn_dir_scan_handle();
         shutdown_scan_handle(); // 自动关机检测和处理函数
@@ -897,13 +1145,14 @@ void main(void)
             */
 
 #if 1
-            if (adc_bat_val < 2619) // 如果在充电时检测到电池电压小于6.0V
-            {
-                // tmp_bat_val = (u32)adc_bat_val + (294 - (u32)adc_bat_val * 157 / 1000);
-                // tmp_bat_val = adc_bat_val  + (522 - adc_bat_val * 157 / 1000);
-                tmp_bat_val = (adc_bat_val + 37);
-            }
-            else if (adc_bat_val <= 2837) // 如果检测电池电压小于 6.5V
+            // if (adc_bat_val < 2619) // 如果在充电时检测到电池电压小于6.0V
+            // {
+            //     // tmp_bat_val = (u32)adc_bat_val + (294 - (u32)adc_bat_val * 157 / 1000);
+            //     // tmp_bat_val = adc_bat_val  + (522 - adc_bat_val * 157 / 1000);
+            //     tmp_bat_val = (adc_bat_val + 37);
+            // }
+            // else if (adc_bat_val <= 2837) // 如果检测电池电压小于 6.5V
+            if (adc_bat_val <= 2837) // 如果检测电池电压小于 6.5V
             {
                 tmp_bat_val = (adc_bat_val + 37);
             }
@@ -961,7 +1210,7 @@ void main(void)
 
             // for (i = 0; i < ARRAY_SIZE(bat_val_fix_table); i++)
             // {
-            //     if (adc_bat_val < bat_val_fix_table[i].adc_bat_val)
+            //     if (adc_bat_val <= bat_val_fix_table[i].adc_bat_val)
             //     {
             //         tmp_bat_val = (adc_bat_val + bat_val_fix_table[i].tmp_bat_val_fix);
             //         break;
@@ -1052,7 +1301,8 @@ void main(void)
             // delay_ms(200);
             for (i = 0; i < 20; i++)
             {
-                key_scan_handle();
+                // key_scan_handle();
+                key_event_handle();
                 delay_ms(10);
             }
 
@@ -1060,7 +1310,8 @@ void main(void)
             // delay_ms(200);
             for (i = 0; i < 20; i++)
             {
-                key_scan_handle();
+                // key_scan_handle();
+                key_event_handle();
                 delay_ms(10);
             }
         }
@@ -1105,9 +1356,19 @@ void int_isr(void) __interrupt
     if (T3IF & T3IE)
     {
         // 目前每1ms进入一次中断
+        { // 按键扫描
+            static u8 key_scan_cnt = 0;
+            key_scan_cnt++;
+            if (key_scan_cnt >= 10)
+            {
+                key_scan_cnt = 0;
+                key_scan();
+            }
+        } // 按键扫描
+
         if (FLAG_IS_DEVICE_OPEN)
         {
-            turn_dir_ms_cnt++; // 会在 turn_dir_scan_handle() 内处理并清零
+            turn_dir_ms_cnt++;  // 会在 turn_dir_scan_handle() 内处理并清零
             shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
         }
 
