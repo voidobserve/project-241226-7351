@@ -45,25 +45,6 @@
 
 #define ARRAY_SIZE(array) (sizeof(array)/sizeof(array[0]))
 
-//============Define  Flag=================
-typedef union
-{
-	unsigned char byte;
-	struct
-	{
-		u8 bit0 : 1;
-		u8 bit1 : 1;
-		u8 bit2 : 1;
-		u8 bit3 : 1;
-		u8 bit4 : 1;
-		u8 bit5 : 1;
-		u8 bit6 : 1;
-		u8 bit7 : 1;
-	} bits;
-} bit_flag;
-volatile bit_flag flag1;
-volatile bit_flag flag2;
-
 #define USE_MY_DEBUG 0
 
 // 使用的芯片/仿真板:
@@ -77,7 +58,14 @@ volatile bit_flag flag2;
 #define BAT_FIX_VAL (1773 / 1000)
 
 #ifdef BAT_FIX_VAL
-#define ADCDETECT_BAT_FULL (3720) //  (3720--对应8.52V)
+// #define ADCDETECT_BAT_FULL (3720) //  (3720--对应8.52V)
+// #define ADCDETECT_BAT_FULL (3666) //  (3666--对应8.4V,但是实际测得在8.51-8.52V才停止)
+// #define ADCDETECT_BAT_FULL (3613) // 计算得出是8.27V， 是在3666的基础上减去一定值（补偿）,实际测得是8.36V
+// #define ADCDETECT_BAT_FULL (3626) //  实际测试是8.37
+// #define ADCDETECT_BAT_FULL (3639) //  实际测试是8.39V
+#define ADCDETECT_BAT_FULL (3642) //  实际测试是 V
+// #define ADCDETECT_BAT_FULL (3644) //  实际测试是8.41V
+// #define ADCDETECT_BAT_FULL (3647) //  实际测试是 8.41V
 #define ADCDETECT_BAT_NULL_EX (280)
 #define ADCDETECT_BAT_WILL_FULL (3472) // (1958)
 #define ADCVAL_REF_BAT_6_0_V (2618)	   // (1477)
@@ -104,12 +92,14 @@ volatile bit_flag flag2;
 // ===================================================
 // 低电量相关配置                                    //
 // ===================================================
-#define LOW_BATTERY_AD_VAL (3055) // 低电量对应的ad值 (3055,对应7V)
+// #define LOW_BATTERY_AD_VAL (3055) // 低电量对应的ad值 (3055,对应7V)
+// #define LOW_BATTERY_AD_VAL (2837) // 低电量对应的ad值 (2837,对应6.5V)
+#define LOW_BATTERY_AD_VAL (2985) // 低电量对应的ad值 (2985,对应6.84V)
 
 // ===================================================
 // 充电相关配置                                      //
 // ===================================================
-#define TMP_BAT_VAL_FIX                 55  // 额外固定增益
+#define TMP_BAT_VAL_FIX 55 // 额外固定增益
 // struct tmp_bat_val_fix
 // {
 //     u16 adc_bat_val;
@@ -141,7 +131,9 @@ enum
 #define KEY_MODE_PIN P01D
 // 检测加热的引脚
 #define KEY_HEAT_PIN P11D
-#define KEY_SCAN_TIME (10)	 // 按键扫描时间 ，单位： ms
+#define KEY_SCAN_TIME (10) // 按键扫描时间 ，单位： ms
+
+// 如果只消抖2次，会过滤不掉抖动
 #define KEY_FILTER_TIMES (3) // 按键消抖次数 (消抖时间 == 消抖次数 * 按键扫描时间)
 
 enum
@@ -239,6 +231,7 @@ enum
 	MODE_1 = 0, // 一上电，按下电源按键，使用的模式
 	MODE_2,
 	MODE_3,
+	MODE_4,
 };
 volatile u8 mode_flag; // 存放模式的标志位
 
@@ -273,9 +266,39 @@ volatile u8 over_charging_cnt; // 在充电时，检测电池是否满电的计�
 volatile u8 full_charge_cnt;   // 检测到充满电后，进行计数的变量
 //
 
+// 定义变量
+#define PWM_MAX_LEVEL 100 // PWM等级数（亮度级别）
+#define BREATH_PERIOD 200  // 呼吸周期（ms）
+
+static uint8_t pwm_duty;		 // 当前PWM占空比
+static uint16_t pwm_counter;	 // PWM计数器
+static uint8_t breath_counter;	 // 呼吸效果计数器
+static uint8_t breath_direction; // 呼吸方向：0-渐亮，1-渐暗
+static uint8_t led_state;		 // LED状态
+
 // 中断服务程序使用到的两个变量：
 u8 abuf;
 u8 statusbuf;
+
+//============Define  Flag=================
+typedef union
+{
+	unsigned char byte;
+	struct
+	{
+		u8 bit0 : 1;
+		u8 bit1 : 1;
+		u8 bit2 : 1;
+		u8 bit3 : 1;
+		u8 bit4 : 1;
+		u8 bit5 : 1;
+		u8 bit6 : 1;
+		u8 bit7 : 1;
+	} bits;
+} bit_flag;
+volatile bit_flag flag1;
+volatile bit_flag flag2;
+volatile bit_flag flag3;
 
 #define FLAG_IS_DEVICE_OPEN flag1.bits.bit0		// 设备是否开机的标志位，0--未开机，1--开机
 #define FLAG_IS_HEATING flag1.bits.bit1			// 加热是否工作的标志位
@@ -291,6 +314,11 @@ u8 statusbuf;
 #define flag_ctl_heat_open flag2.bits.bit1	 // 控制标志位，控制 加热的 开/关
 
 #define flag_is_low_battery flag2.bits.bit2 // 标志位，是否检测到低电量
+
+#define flag_ctl_dir flag3.bits.bit0   // 控制标志位，是否要切换方向
+#define flag_ctl_speed flag3.bits.bit1 // 控制标志位，是否要切换电机转速
+
+#define flag_maybe_low_battery flag3.bits.bit2 // 标志位，可能检测到了低电量
 
 // #define flag_key_scan_10ms flag2.bits.bit0 // 标志位,用于按键检测，是否经过了10ms
 
@@ -360,7 +388,7 @@ void send_data_msb(u32 send_data)
 	delay_ms(1);
 	DEBUG_PIN = 0;
 }
-#endif // #if USE_MY_DEBUG 
+#endif // #if USE_MY_DEBUG
 
 #endif
 /**************************** end of file *********************************************/
