@@ -449,9 +449,9 @@ void key_event_handle(void)
 
             if (flag_is_low_battery)
             {
-                // 如果关机前处于低电量报警的状态
-                LED_CHARGING_OFF(); // 关闭用于报警的LED
+                // 如果关机前处于 低电量报警 的状态
                 flag_is_low_battery = 0;
+                LED_CHARGING_OFF(); // 关闭用于报警的LED
             }
 
             mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
@@ -611,7 +611,7 @@ void adc_scan_handle(void)
                     LED_CHARGING_OFF(); // 关闭充电指示灯
                     // LED_WORKING_ON();   // 开启工作指示灯（蓝灯常亮）
                     // LED_FULL_CHARGE_ON(); // 开启电池充满电的指示灯
-                    LED_WORKING_ON();      // 打开电源指示灯，表示充满电
+                    LED_WORKING_ON(); // 打开电源指示灯，表示充满电
                     break;
                 }
             }
@@ -641,16 +641,51 @@ void adc_scan_handle(void)
                 break;
             }
 
-            // 检测电池是否处于低电量：
-            if (flag_bat_is_empty == 0 &&
-                FLAG_IS_DEVICE_OPEN &&
-                adc_val < LOW_BATTERY_AD_VAL)
+            if (                           /* 检测电池是否处于关机对应的电压 */
+                flag_bat_is_empty == 0 &&  /* 电池不为空 */
+                FLAG_IS_DEVICE_OPEN &&     /* 设备正在运行 */
+                adc_val < SHUT_DOWN_AD_VAL /* 采集到的ad值小于关机对应的ad值 */
+            )
             {
+                flag_tim_scan_maybe_shut_down = 1;
+            }
+            else if (flag_bat_is_empty == 0 &&
+                     FLAG_IS_DEVICE_OPEN &&
+                     adc_val < LOW_BATTERY_AD_VAL)
+            {
+                // 检测电池是否处于低电量：
                 flag_maybe_low_battery = 1;
+                flag_tim_scan_maybe_shut_down = 0;
             }
             else
             {
                 flag_maybe_low_battery = 0;
+                flag_tim_scan_maybe_shut_down = 0;
+            }
+
+            // 如果真的到了关机对应的电压
+            if (flag_is_needed_shut_down && FLAG_IS_DEVICE_OPEN)
+            {
+                flag_is_needed_shut_down = 0;
+                // 关机：
+                LED_WORKING_OFF(); // 关闭电源指示灯
+                LED_CHARGING_OFF();
+                HEATING_OFF(); // 关闭加热
+                FLAG_IS_DEVICE_OPEN = 0;
+                FLAG_IS_HEATING = 0;
+
+                if (flag_is_low_battery)
+                {
+                    // 如果关机前处于低电量报警的状态
+                    flag_is_low_battery = 0;
+                    LED_CHARGING_OFF(); // 关闭用于报警的LED
+                }
+
+                mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
+
+                // 关闭 正转和反转的PWM
+                PWM0EC = 0;
+                PWM1EC = 0;
             }
         }
 
@@ -694,7 +729,7 @@ void adc_scan_handle(void)
                 PWM2EC = 0;         // 关闭控制升压电路的pwm
                 T2DATA = 0;
                 LED_FULL_CHARGE_OFF(); // 关闭电池充满电的指示灯
-                LED_WORKING_OFF(); // 关闭电池充满电的指示灯（白灯）
+                LED_WORKING_OFF();     // 关闭电池充满电的指示灯（白灯）
 
                 FLAG_DURING_CHARGING_BAT_IS_NULL = 0; // 清空该标志位，因为已经不在充电的情况下
                 break;
@@ -703,9 +738,8 @@ void adc_scan_handle(void)
             if (FLAG_IS_DEVICE_OPEN)
             {
             }
-            else
+            else // 如果设备未开启
             {
-                // 如果设备未开启
                 if (FLAG_BAT_IS_FULL)
                 {
                 }
@@ -878,9 +912,13 @@ label:
     ADEN = 0; // 不使能ad
 
     // LED脚配置为输入模式（从外部来看，相当于高阻态）：
-    P14OE = 0;
-    P04OE = 0;
-    P03OE = 0;
+    // P14OE = 0;
+    // P04OE = 0;
+    // P03OE = 0;
+
+    LED_WORKING_OFF();
+    LED_CHARGING_OFF();
+    LED_FULL_CHARGE_OFF();
 
     // 开关/模式按键的配置，配置为输入上拉
     P01PU = 1;
@@ -1234,29 +1272,60 @@ void int_isr(void) __interrupt
                     shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
                 }
 
-                {
+                { // 低电量检测
                     static u16 low_bat_cnt = 0;
+                    // static u16 cancel_low_bat_alarm_cnt = 0; // 取消低电量报警的时间计数
+
                     if (flag_maybe_low_battery)
                     {
                         low_bat_cnt++;
-                        if (low_bat_cnt >= 2000)
+                        // if (low_bat_cnt >= 2000) // xx ms
+                        if (low_bat_cnt >= 5000) // xx ms
                         {
+                            low_bat_cnt = 0;
                             flag_is_low_battery = 1;
                         }
                     }
                     else
                     {
                         low_bat_cnt = 0;
+
+                        // if (flag_is_low_battery) // 如果之前处于低电量报警
+                        // {
+                            // cancel_low_bat_alarm_cnt++;
+                        //     if (cancel_low_bat_alarm_cnt >= 2000) // 持续 xx ms检测到电池电量正常，取消低电量报警
+                        //     {
+                        //         cancel_low_bat_alarm_cnt = 0;
+                        //     }
+                        // }
+                        // else
+                        // {
+                        //     cancel_low_bat_alarm_cnt = 0;
+                        // }
                     }
-                }
+                } // 低电量检测
+
+                { // 关机电量检测
+                    static u16 shut_down_bat_cnt = 0;
+                    if (flag_tim_scan_maybe_shut_down)
+                    {
+                        shut_down_bat_cnt++;
+                        if (shut_down_bat_cnt >= 1000) // xx ms
+                        {
+                            shut_down_bat_cnt = 0;
+                            flag_is_needed_shut_down = 1;
+                        }
+                    }
+                    else
+                    {
+                        shut_down_bat_cnt = 0;
+                        flag_is_needed_shut_down = 0;
+                    }
+                } // 关机电量检测
             }
         }
 
-        // if (timer3_cnt < 4294967296)
-        // {
-        //     timer3_cnt++;
-        // }
-
+        // 呼吸灯控制：
         if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
         {
             // PWM控制
@@ -1318,7 +1387,7 @@ void int_isr(void) __interrupt
             {
                 LED_CHARGING_PIN = LED_OFF;
             }
-        }
+        } // 呼吸灯控制 if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
 
         T3IF = 0;
     }
