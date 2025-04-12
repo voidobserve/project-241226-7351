@@ -1099,8 +1099,8 @@ void main(void)
             // 7361,0.98A-1.0A
             // tmp_bat_val += 55;
 
-            // tmp_bat_val += 60; // 1.1
-            tmp_bat_val += 65; // 1.1
+            tmp_bat_val += 60; // 1.1
+            // tmp_bat_val += 65; // 1.1
 
 
             // tmp_bat_val += 70; // 
