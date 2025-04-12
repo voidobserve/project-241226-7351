@@ -147,7 +147,7 @@ void adc_sel_pin(u8 adc_pin)
     // 根据传参，切换成对应的通道
     switch (adc_pin)
     {
-    case ADC_PIN_P00_AN0:
+    case ADC_PIN_P00_AN0:      // 检测是否有充电的引脚
         ADCR0 &= ~(0x0F << 4); // 清空寄存器的通道选择位
         // 清空后的通道就是 AIN0--P00
 
@@ -158,7 +158,7 @@ void adc_sel_pin(u8 adc_pin)
         // ADCHS0 = 0;
         break;
 
-    case ADC_PIN_P02_AN1:
+    case ADC_PIN_P02_AN1:      // 检测电池分压后的引脚
         ADCR0 &= ~(0x0F << 4); // 清空寄存器的通道选择位
         ADCR0 |= 0x01 << 4;    // AIN1--P02;
 
@@ -1022,6 +1022,7 @@ void main(void)
             last_pwm_val = T2DATA;      // 读出上一次PWM占空比对应的值
             max_pwm_val = (T2LOAD + 1); // 读出PWM占空比设定的、最大的值
 
+#if 1 // 使用计算的方式来控制充电电流
             /*
                 修改电压差值，电压差值 = 203 - (adc_bat_val * 122 / 1000)
 
@@ -1098,13 +1099,17 @@ void main(void)
             // 7361,0.98A-1.0A
             // tmp_bat_val += 55;
 
-            // tmp_bat_val += 60;
+            // tmp_bat_val += 60; // 1.1
+            tmp_bat_val += 65; // 1.1
 
+
+            // tmp_bat_val += 70; // 
             // tmp_bat_val += 75; // 1.16-1.17
-            // tmp_bat_val += 80; //  1.21
+            // tmp_bat_val += 80; // 
 
-            tmp_bat_val += 95; // 1.18A(电池8V，使用外部的电池)
-                               // tmp_bat_val += 105; // 1.32-1.39A
+            // tmp_bat_val += 95; // 1.18A(电池8V，使用外部的电池)
+
+            // tmp_bat_val += 105; // 1.32-1.39A
 
 #endif
 
@@ -1177,6 +1182,61 @@ void main(void)
             {
                 last_pwm_val = last_pwm_val - 1;
             }
+#endif // 使用计算的方式来控制充电电流
+
+#if 0 // 使用检测充电前后电池电压变化的差值来控制充电电流
+
+            u16 adc_bat_val_when_charging;     // 充电时的电池电压
+            u16 adc_bat_val_when_not_charging; // 未充电时的电池电压
+            u8 adjust_pwm_val_dir;             // 调整方向
+
+            if (flag_is_update_current)
+            {                
+                flag_is_update_current = 0;
+                PWM2EC = 1; // 使能升压的PWM
+                delay_ms(WAIT_CIRCUIT_STABLIZE_TIMES);
+                adc_sel_pin(ADC_PIN_P02_AN1);
+                adc_bat_val_when_charging = adc_get_val();
+
+                PWM2EC = 0; // 不使能升压的PWM
+                delay_ms(WAIT_CIRCUIT_STABLIZE_TIMES);
+                adc_bat_val_when_not_charging = adc_get_val();
+
+                if (adc_bat_val_when_charging > adc_bat_val_when_not_charging) /* 如果充电时，测得的ad值比没有充电时的ad值大 */
+                {
+                    if ((adc_bat_val_when_charging - adc_bat_val_when_not_charging) > ADC_BAT_DIFF_VAL) /* 如果充电时和没有充电时的差值大于设定的差值 */
+                    {
+                        adjust_pwm_val_dir = 0;
+                    }
+                    else
+                    {
+                        adjust_pwm_val_dir = 1;
+                    }
+                }
+                else
+                {
+                    adjust_pwm_val_dir = 1;
+                }
+
+                if (adjust_pwm_val_dir)
+                {
+                    if (last_pwm_val < max_pwm_val)
+                    {
+                        last_pwm_val++;
+                    }
+                }
+                else
+                {
+                    if (last_pwm_val >= 1)
+                    {
+                        last_pwm_val--;
+                    }
+                }
+            }
+
+            PWM2EC = 1; // 使能升压的PWM
+
+#endif // 使用检测充电前后电池电压变化的差值来控制充电电流
 
             T2DATA = last_pwm_val;
         } // if (FLAG_IS_IN_CHARGING)
@@ -1292,7 +1352,7 @@ void int_isr(void) __interrupt
 
                         // if (flag_is_low_battery) // 如果之前处于低电量报警
                         // {
-                            // cancel_low_bat_alarm_cnt++;
+                        // cancel_low_bat_alarm_cnt++;
                         //     if (cancel_low_bat_alarm_cnt >= 2000) // 持续 xx ms检测到电池电量正常，取消低电量报警
                         //     {
                         //         cancel_low_bat_alarm_cnt = 0;
@@ -1322,6 +1382,24 @@ void int_isr(void) __interrupt
                         flag_is_needed_shut_down = 0;
                     }
                 } // 关机电量检测
+
+                { // 充电时，调节电流时间间隔控制
+                    static u16 update_current_time_cnt;
+                    if (FLAG_IS_IN_CHARGING)
+                    {
+                        update_current_time_cnt++;
+                        if (update_current_time_cnt >= 500)
+                        {
+                            update_current_time_cnt = 0;
+                            flag_is_update_current = 1;
+                        }
+                    }
+                    else
+                    {
+                        FLAG_IS_IN_CHARGING = 0;
+                    }
+
+                } // 充电时，调节电流时间间隔控制
             }
         }
 
