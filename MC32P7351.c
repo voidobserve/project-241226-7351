@@ -32,28 +32,28 @@ void CLR_RAM(void)
 ;  *    @输入参数          :
 ;  *    @返回参数          :
 ;  ***********************************************/
-void IO_Init(void)
-{
-    IOP0 = 0x00;   // io口数据位
-    OEP0 = 0x3F;   // io口方向 1:out  0:in
-    PUP0 = 0x00;   // io口上拉电阻   1:enable  0:disable
-    PDP0 = 0x00;   // io口下拉电阻   1:enable  0:disable
-    ADIOS0 = 0x00; // io类型选择  1:模拟输入  0:通用io
+// void IO_Init(void)
+// {
+//     IOP0 = 0x00;   // io口数据位
+//     OEP0 = 0x3F;   // io口方向 1:out  0:in
+//     PUP0 = 0x00;   // io口上拉电阻   1:enable  0:disable
+//     PDP0 = 0x00;   // io口下拉电阻   1:enable  0:disable
+//     ADIOS0 = 0x00; // io类型选择  1:模拟输入  0:通用io
 
-    IOP1 = 0x00;   // io口数据位
-    OEP1 = 0xFF;   // io口方向 1:out  0:in
-    PUP1 = 0x00;   // io口上拉电阻   1:enable  0:disable
-    PDP1 = 0x00;   // io口下拉电阻   1:enable  0:disable
-    ADIOS1 = 0x00; // io类型选择  1:模拟输入  0:通用io
+//     IOP1 = 0x00;   // io口数据位
+//     OEP1 = 0xFF;   // io口方向 1:out  0:in
+//     PUP1 = 0x00;   // io口上拉电阻   1:enable  0:disable
+//     PDP1 = 0x00;   // io口下拉电阻   1:enable  0:disable
+//     ADIOS1 = 0x00; // io类型选择  1:模拟输入  0:通用io
 
-    // IOP2 = 0x00; // io口数据位
-    // OEP2 = 0xFF; // io口方向 1:out  0:in
-    // PUP2 = 0x00; // io口上拉电阻   1:enable  0:disable
-    // PDP2 = 0x00; // io口下拉电阻   1:enable  0:disablea
+//     // IOP2 = 0x00; // io口数据位
+//     // OEP2 = 0xFF; // io口方向 1:out  0:in
+//     // PUP2 = 0x00; // io口上拉电阻   1:enable  0:disable
+//     // PDP2 = 0x00; // io口下拉电阻   1:enable  0:disablea
 
-    PMOD = 0x00;  // P00、P01、P13 io端口值从寄存器读，推挽输出
-    DRVCR = 0x80; // 普通驱动
-}
+//     PMOD = 0x00;  // P00、P01、P13 io端口值从寄存器读，推挽输出
+//     DRVCR = 0x80; // 普通驱动
+// }
 
 // adc配置
 void adc_config(void)
@@ -1139,22 +1139,38 @@ void main(void)
             if (adc_bat_val <= 2837) // 如果检测电池电压小于 6.5V
             {
                 // tmp_bat_val = (adc_bat_val + 37);
-                tmp_bat_val += 37;
+                // tmp_bat_val += 37;
+                // tmp_bat_val += 60;
+                // tmp_bat_val += 100;
+                // tmp_bat_val += 140;
+                // tmp_bat_val += 200;
+                tmp_bat_val += 300;
             }
             else if (adc_bat_val <= 3056) // 如果检测电池电压小于 7.0V
             {
                 // tmp_bat_val = (adc_bat_val + 27);
-                tmp_bat_val += 27;
+                // tmp_bat_val += 27;
+                // tmp_bat_val += 50;
+                // tmp_bat_val += 120;
+                // tmp_bat_val += 140;
+                // tmp_bat_val += 160;
+                // tmp_bat_val += 200;
+                // tmp_bat_val += 220;
+                tmp_bat_val += 250;
+                // tmp_bat_val += 255;
             }
             else if (adc_bat_val <= 3188) // 如果检测电池电压小于 7.3V
             {
                 // tmp_bat_val = (adc_bat_val + 16);
-                tmp_bat_val += 16;
+                // tmp_bat_val += 16;
+                // tmp_bat_val += 106;
+                tmp_bat_val += 120;
             }
             else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
             {
                 // tmp_bat_val = (adc_bat_val + 0);
                 // tmp_bat_val = (adc_bat_val + 0);
+                tmp_bat_val += 90;
             }
             else // 如果在充电时检测到电池电压大于
             // else if (adc_bat_val <= 3580) // 小于8.2V
@@ -1171,6 +1187,30 @@ void main(void)
                 // tmp_bat_val = (u32)adc_bat_val - ((u32)adc_bat_val * 157 / 1000 - 522);
                 tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
             }
+            // else // 如果电池电压大于8.2V，降低电流
+            // {
+            // // tmp_bat_val = (adc_bat_val + 10);
+            // }
+
+            // tmp_bat_val += 30;
+            // tmp_bat_val += 32;
+            // tmp_bat_val += 52; //
+            // tmp_bat_val += 33; // 1.3A(7361芯片)
+
+            // 用7351芯片,充电电流 0.89-0.90A
+            // 7361,0.83-0.84A
+            // tmp_bat_val += 27; //
+
+            // 7361,0.84-0.85A
+            // tmp_bat_val += 30;
+
+            // 7361,0.9A
+            // tmp_bat_val += 33;
+
+            // 7361,0.95A
+            // tmp_bat_val += 40;
+
+            // 7361,0.98A-1.0A
 
             // tmp_bat_val += 30;
             // tmp_bat_val += 40; // 1.07、1.08A
@@ -1192,7 +1232,6 @@ void main(void)
 
             {
                 // if (tmp_bat_val > 90)
-                //     tmp_bat_val -= 90;
                 u16 i;
                 for (i = 0; i < 90; i++)
                 {
@@ -1203,7 +1242,8 @@ void main(void)
                 }
             }
 
-            if (adc_bat_val >= 3579) // 8.2V及以上 , 降低电流
+            // if (adc_bat_val >= 3579) // 8.2V及以上 , 降低电流
+            if (adc_bat_val >= 3623) // 8.30V及以上 , 降低电流
             {
                 // tmp_bat_val -= 30; // 830mA
                 // tmp_bat_val -= 40; // 760mA
