@@ -1,5 +1,5 @@
 gplink-2.2.37 (Jan 22 2024)
-Listing File Generated: 2025-4-23  18:16:33
+Listing File Generated: 2025-4-24  10:36:40
  
  
 Address  Value    Disassembly              Source
@@ -566,13 +566,13 @@ Address  Value    Disassembly              Source
                                            ;; Starting pCode block
                                            _int_isr	;Function start
                                            ; 0 exit points
-                                           ;	.line	1485; "MC32P7351.c"	__endasm;
+                                           ;	.line	1487; "MC32P7351.c"	__endasm;
                                            	;
 000008   568c     movra   0x8c             	movra	_abuf;
 000009   4587     swapar  0x187            	swapar	_PFLAG;
 00000a   568d     movra   0x8d             	movra	_statusbuf;
                                            	
-                                           ;	.line	1492; "MC32P7351.c"	if (T3IF & T3IE)
+                                           ;	.line	1494; "MC32P7351.c"	if (T3IF & T3IE)
 00000b   7620     clrr    0x20             	CLRR	r0x1064
 00000c   ff8b     jbclr   0x18b, 0x7       	JBCLR	_INTFbits,7
 00000d   6620     incr    0x20             	INCR	r0x1064
@@ -585,35 +585,35 @@ Address  Value    Disassembly              Source
 000014   5c20     orar    0x20             	ORAR	r0x1064
 000015   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 000016   a0b1     goto    0xb1             	GOTO	_01072_DS_
-                                           ;	.line	1496; "MC32P7351.c"	__1ms_cnt++;
+                                           ;	.line	1498; "MC32P7351.c"	__1ms_cnt++;
 000017   662b     incr    0x2b             	INCR	_int_isr___1ms_cnt_196608_244
                                            ;;unsigned compare: left < lit(0xA=10), size=1
-                                           ;	.line	1497; "MC32P7351.c"	if (__1ms_cnt >= 10)
+                                           ;	.line	1499; "MC32P7351.c"	if (__1ms_cnt >= 10)
 000018   3c0a     movai   0xa              	MOVAI	0x0a
 000019   482b     rsubar  0x2b             	RSUBAR	_int_isr___1ms_cnt_196608_244
 00001a   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00001b   a06d     goto    0x6d             	GOTO	_01049_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1499; "MC32P7351.c"	__1ms_cnt = 0;
+                                           ;	.line	1501; "MC32P7351.c"	__1ms_cnt = 0;
 00001c   762b     clrr    0x2b             	CLRR	_int_isr___1ms_cnt_196608_244
-                                           ;	.line	1503; "MC32P7351.c"	key_scan_cnt++;
+                                           ;	.line	1505; "MC32P7351.c"	key_scan_cnt++;
 00001d   662c     incr    0x2c             	INCR	_int_isr_key_scan_cnt_327680_246
                                            ;;unsigned compare: left < lit(0xA=10), size=1
-                                           ;	.line	1504; "MC32P7351.c"	if (key_scan_cnt >= 10)
+                                           ;	.line	1506; "MC32P7351.c"	if (key_scan_cnt >= 10)
 00001e   3c0a     movai   0xa              	MOVAI	0x0a
 00001f   482c     rsubar  0x2c             	RSUBAR	_int_isr_key_scan_cnt_327680_246
 000020   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000021   a024     goto    0x24             	GOTO	_01030_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1506; "MC32P7351.c"	key_scan_cnt = 0;
+                                           ;	.line	1508; "MC32P7351.c"	key_scan_cnt = 0;
 000022   762c     clrr    0x2c             	CLRR	_int_isr_key_scan_cnt_327680_246
-                                           ;	.line	1507; "MC32P7351.c"	key_scan();
+                                           ;	.line	1509; "MC32P7351.c"	key_scan();
 000023   8548     call    0x548            	CALL	_key_scan
                                            _01030_DS_
-                                           ;	.line	1511; "MC32P7351.c"	if (FLAG_IS_DEVICE_OPEN)
+                                           ;	.line	1513; "MC32P7351.c"	if (FLAG_IS_DEVICE_OPEN)
 000024   e08e     jbset   0x8e, 0          	JBSET	_flag1,0
 000025   a034     goto    0x34             	GOTO	_01032_DS_
-                                           ;	.line	1513; "MC32P7351.c"	turn_dir_ms_cnt++;  // 会在 turn_dir_scan_handle() 内处理并清零
+                                           ;	.line	1515; "MC32P7351.c"	turn_dir_ms_cnt++;  // 会在 turn_dir_scan_handle() 内处理并清零
 000026   666a     incr    0x6a             	INCR	_turn_dir_ms_cnt
 000027   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 000028   666b     incr    0x6b             	INCR	(_turn_dir_ms_cnt + 1)
@@ -621,7 +621,7 @@ Address  Value    Disassembly              Source
 00002a   666c     incr    0x6c             	INCR	(_turn_dir_ms_cnt + 2)
 00002b   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 00002c   666d     incr    0x6d             	INCR	(_turn_dir_ms_cnt + 3)
-                                           ;	.line	1514; "MC32P7351.c"	shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
+                                           ;	.line	1516; "MC32P7351.c"	shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
 00002d   666e     incr    0x6e             	INCR	_shut_down_ms_cnt
 00002e   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 00002f   666f     incr    0x6f             	INCR	(_shut_down_ms_cnt + 1)
@@ -630,15 +630,15 @@ Address  Value    Disassembly              Source
 000032   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 000033   6671     incr    0x71             	INCR	(_shut_down_ms_cnt + 3)
                                            _01032_DS_
-                                           ;	.line	1521; "MC32P7351.c"	if (flag_maybe_low_battery)
+                                           ;	.line	1523; "MC32P7351.c"	if (flag_maybe_low_battery)
 000034   e490     jbset   0x90, 0x2        	JBSET	_flag3,2
 000035   a045     goto    0x45             	GOTO	_01036_DS_
-                                           ;	.line	1523; "MC32P7351.c"	low_bat_cnt++;
+                                           ;	.line	1525; "MC32P7351.c"	low_bat_cnt++;
 000036   662d     incr    0x2d             	INCR	_int_isr_low_bat_cnt_327680_249
 000037   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 000038   662e     incr    0x2e             	INCR	(_int_isr_low_bat_cnt_327680_249 + 1)
                                            ;;unsigned compare: left < lit(0x1388=5000), size=2
-                                           ;	.line	1525; "MC32P7351.c"	if (low_bat_cnt >= 5000) // xx ms
+                                           ;	.line	1527; "MC32P7351.c"	if (low_bat_cnt >= 5000) // xx ms
 000039   3c13     movai   0x13             	MOVAI	0x13
 00003a   482e     rsubar  0x2e             	RSUBAR	(_int_isr_low_bat_cnt_327680_249 + 1)
 00003b   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -649,26 +649,26 @@ Address  Value    Disassembly              Source
 00003f   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000040   a047     goto    0x47             	GOTO	_01037_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1527; "MC32P7351.c"	low_bat_cnt = 0;
+                                           ;	.line	1529; "MC32P7351.c"	low_bat_cnt = 0;
 000041   762d     clrr    0x2d             	CLRR	_int_isr_low_bat_cnt_327680_249
 000042   762e     clrr    0x2e             	CLRR	(_int_isr_low_bat_cnt_327680_249 + 1)
-                                           ;	.line	1528; "MC32P7351.c"	flag_is_low_battery = 1;
+                                           ;	.line	1530; "MC32P7351.c"	flag_is_low_battery = 1;
 000043   c48f     bset    0x8f, 0x2        	BSET	_flag2,2
 000044   a047     goto    0x47             	GOTO	_01037_DS_
                                            _01036_DS_
-                                           ;	.line	1533; "MC32P7351.c"	low_bat_cnt = 0;
+                                           ;	.line	1535; "MC32P7351.c"	low_bat_cnt = 0;
 000045   762d     clrr    0x2d             	CLRR	_int_isr_low_bat_cnt_327680_249
 000046   762e     clrr    0x2e             	CLRR	(_int_isr_low_bat_cnt_327680_249 + 1)
                                            _01037_DS_
-                                           ;	.line	1552; "MC32P7351.c"	if (flag_tim_scan_maybe_shut_down)
+                                           ;	.line	1554; "MC32P7351.c"	if (flag_tim_scan_maybe_shut_down)
 000047   e690     jbset   0x90, 0x3        	JBSET	_flag3,3
 000048   a058     goto    0x58             	GOTO	_01041_DS_
-                                           ;	.line	1554; "MC32P7351.c"	shut_down_bat_cnt++;
+                                           ;	.line	1556; "MC32P7351.c"	shut_down_bat_cnt++;
 000049   662f     incr    0x2f             	INCR	_int_isr_shut_down_bat_cnt_327680_253
 00004a   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 00004b   6630     incr    0x30             	INCR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
                                            ;;unsigned compare: left < lit(0x3E8=1000), size=2
-                                           ;	.line	1555; "MC32P7351.c"	if (shut_down_bat_cnt >= 1000) // xx ms
+                                           ;	.line	1557; "MC32P7351.c"	if (shut_down_bat_cnt >= 1000) // xx ms
 00004c   3c03     movai   0x3              	MOVAI	0x03
 00004d   4830     rsubar  0x30             	RSUBAR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
 00004e   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -679,28 +679,28 @@ Address  Value    Disassembly              Source
 000052   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000053   a05b     goto    0x5b             	GOTO	_01042_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1557; "MC32P7351.c"	shut_down_bat_cnt = 0;
+                                           ;	.line	1559; "MC32P7351.c"	shut_down_bat_cnt = 0;
 000054   762f     clrr    0x2f             	CLRR	_int_isr_shut_down_bat_cnt_327680_253
 000055   7630     clrr    0x30             	CLRR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
-                                           ;	.line	1558; "MC32P7351.c"	flag_is_needed_shut_down = 1;
+                                           ;	.line	1560; "MC32P7351.c"	flag_is_needed_shut_down = 1;
 000056   c890     bset    0x90, 0x4        	BSET	_flag3,4
 000057   a05b     goto    0x5b             	GOTO	_01042_DS_
                                            _01041_DS_
-                                           ;	.line	1563; "MC32P7351.c"	shut_down_bat_cnt = 0;
+                                           ;	.line	1565; "MC32P7351.c"	shut_down_bat_cnt = 0;
 000058   762f     clrr    0x2f             	CLRR	_int_isr_shut_down_bat_cnt_327680_253
 000059   7630     clrr    0x30             	CLRR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
-                                           ;	.line	1564; "MC32P7351.c"	flag_is_needed_shut_down = 0;
+                                           ;	.line	1566; "MC32P7351.c"	flag_is_needed_shut_down = 0;
 00005a   d890     bclr    0x90, 0x4        	BCLR	_flag3,4
                                            _01042_DS_
-                                           ;	.line	1570; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING)
+                                           ;	.line	1572; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING)
 00005b   e48e     jbset   0x8e, 0x2        	JBSET	_flag1,2
 00005c   a06c     goto    0x6c             	GOTO	_01046_DS_
-                                           ;	.line	1572; "MC32P7351.c"	update_current_time_cnt++;
+                                           ;	.line	1574; "MC32P7351.c"	update_current_time_cnt++;
 00005d   6631     incr    0x31             	INCR	_int_isr_update_current_time_cnt_327680_257
 00005e   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 00005f   6632     incr    0x32             	INCR	(_int_isr_update_current_time_cnt_327680_257 + 1)
                                            ;;unsigned compare: left < lit(0x1F4=500), size=2
-                                           ;	.line	1573; "MC32P7351.c"	if (update_current_time_cnt >= 500)
+                                           ;	.line	1575; "MC32P7351.c"	if (update_current_time_cnt >= 500)
 000060   3c01     movai   0x1              	MOVAI	0x01
 000061   4832     rsubar  0x32             	RSUBAR	(_int_isr_update_current_time_cnt_327680_257 + 1)
 000062   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -711,22 +711,22 @@ Address  Value    Disassembly              Source
 000066   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000067   a06d     goto    0x6d             	GOTO	_01049_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1575; "MC32P7351.c"	update_current_time_cnt = 0;
+                                           ;	.line	1577; "MC32P7351.c"	update_current_time_cnt = 0;
 000068   7631     clrr    0x31             	CLRR	_int_isr_update_current_time_cnt_327680_257
 000069   7632     clrr    0x32             	CLRR	(_int_isr_update_current_time_cnt_327680_257 + 1)
-                                           ;	.line	1576; "MC32P7351.c"	flag_is_update_current = 1;
+                                           ;	.line	1578; "MC32P7351.c"	flag_is_update_current = 1;
 00006a   ca90     bset    0x90, 0x5        	BSET	_flag3,5
 00006b   a06d     goto    0x6d             	GOTO	_01049_DS_
                                            _01046_DS_
-                                           ;	.line	1581; "MC32P7351.c"	FLAG_IS_IN_CHARGING = 0;
+                                           ;	.line	1583; "MC32P7351.c"	FLAG_IS_IN_CHARGING = 0;
 00006c   d48e     bclr    0x8e, 0x2        	BCLR	_flag1,2
                                            _01049_DS_
-                                           ;	.line	1589; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
+                                           ;	.line	1591; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
 00006d   e48e     jbset   0x8e, 0x2        	JBSET	_flag1,2
 00006e   a0b0     goto    0xb0             	GOTO	_01069_DS_
 00006f   fa8e     jbclr   0x8e, 0x5        	JBCLR	_flag1,5
 000070   a0b0     goto    0xb0             	GOTO	_01069_DS_
-                                           ;	.line	1592; "MC32P7351.c"	if (pwm_counter < pwm_duty)
+                                           ;	.line	1594; "MC32P7351.c"	if (pwm_counter < pwm_duty)
 000071   5837     movar   0x37             	MOVAR	_pwm_duty
 000072   5620     movra   0x20             	MOVRA	r0x1064
 000073   7621     clrr    0x21             	CLRR	r0x1065
@@ -740,20 +740,20 @@ Address  Value    Disassembly              Source
 00007a   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 00007b   a07f     goto    0x7f             	GOTO	_01051_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1594; "MC32P7351.c"	led_state = 1; // LED亮
+                                           ;	.line	1596; "MC32P7351.c"	led_state = 1; // LED亮
 00007c   3c01     movai   0x1              	MOVAI	0x01
 00007d   5633     movra   0x33             	MOVRA	_led_state
 00007e   a080     goto    0x80             	GOTO	_01052_DS_
                                            _01051_DS_
-                                           ;	.line	1598; "MC32P7351.c"	led_state = 0; // LED灭
+                                           ;	.line	1600; "MC32P7351.c"	led_state = 0; // LED灭
 00007f   7633     clrr    0x33             	CLRR	_led_state
                                            _01052_DS_
-                                           ;	.line	1602; "MC32P7351.c"	pwm_counter++;
+                                           ;	.line	1604; "MC32P7351.c"	pwm_counter++;
 000080   6634     incr    0x34             	INCR	_pwm_counter
 000081   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 000082   6635     incr    0x35             	INCR	(_pwm_counter + 1)
                                            ;;unsigned compare: left < lit(0x64=100), size=2
-                                           ;	.line	1603; "MC32P7351.c"	if (pwm_counter >= PWM_MAX_LEVEL)
+                                           ;	.line	1605; "MC32P7351.c"	if (pwm_counter >= PWM_MAX_LEVEL)
 000083   3c00     movai   0                	MOVAI	0x00
 000084   4835     rsubar  0x35             	RSUBAR	(_pwm_counter + 1)
 000085   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -764,73 +764,73 @@ Address  Value    Disassembly              Source
 000089   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00008a   a08d     goto    0x8d             	GOTO	_01054_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1605; "MC32P7351.c"	pwm_counter = 0;
+                                           ;	.line	1607; "MC32P7351.c"	pwm_counter = 0;
 00008b   7634     clrr    0x34             	CLRR	_pwm_counter
 00008c   7635     clrr    0x35             	CLRR	(_pwm_counter + 1)
                                            _01054_DS_
-                                           ;	.line	1609; "MC32P7351.c"	breath_counter++;
+                                           ;	.line	1611; "MC32P7351.c"	breath_counter++;
 00008d   6636     incr    0x36             	INCR	_breath_counter
                                            ;;unsigned compare: left < lit(0xC8=200), size=1
-                                           ;	.line	1610; "MC32P7351.c"	if (breath_counter >= BREATH_PERIOD)
+                                           ;	.line	1612; "MC32P7351.c"	if (breath_counter >= BREATH_PERIOD)
 00008e   3cc8     movai   0xc8             	MOVAI	0xc8
 00008f   4836     rsubar  0x36             	RSUBAR	_breath_counter
 000090   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000091   a0a9     goto    0xa9             	GOTO	_01064_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1612; "MC32P7351.c"	breath_counter = 0;
+                                           ;	.line	1614; "MC32P7351.c"	breath_counter = 0;
 000092   7636     clrr    0x36             	CLRR	_breath_counter
-                                           ;	.line	1615; "MC32P7351.c"	if (breath_direction == 0)
+                                           ;	.line	1617; "MC32P7351.c"	if (breath_direction == 0)
 000093   3c00     movai   0                	MOVAI	0x00
 000094   5c38     orar    0x38             	ORAR	_breath_direction
 000095   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
 000096   a0a1     goto    0xa1             	GOTO	_01061_DS_
-                                           ;	.line	1618; "MC32P7351.c"	pwm_duty++;
+                                           ;	.line	1620; "MC32P7351.c"	pwm_duty++;
 000097   6637     incr    0x37             	INCR	_pwm_duty
                                            ;;unsigned compare: left < lit(0x64=100), size=1
-                                           ;	.line	1619; "MC32P7351.c"	if (pwm_duty >= PWM_MAX_LEVEL)
+                                           ;	.line	1621; "MC32P7351.c"	if (pwm_duty >= PWM_MAX_LEVEL)
 000098   3c64     movai   0x64             	MOVAI	0x64
 000099   4837     rsubar  0x37             	RSUBAR	_pwm_duty
 00009a   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00009b   a0a9     goto    0xa9             	GOTO	_01064_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1621; "MC32P7351.c"	pwm_duty = PWM_MAX_LEVEL;
+                                           ;	.line	1623; "MC32P7351.c"	pwm_duty = PWM_MAX_LEVEL;
 00009c   3c64     movai   0x64             	MOVAI	0x64
 00009d   5637     movra   0x37             	MOVRA	_pwm_duty
-                                           ;	.line	1622; "MC32P7351.c"	breath_direction = 1; // 切换到渐暗
+                                           ;	.line	1624; "MC32P7351.c"	breath_direction = 1; // 切换到渐暗
 00009e   3c01     movai   0x1              	MOVAI	0x01
 00009f   5638     movra   0x38             	MOVRA	_breath_direction
 0000a0   a0a9     goto    0xa9             	GOTO	_01064_DS_
                                            _01061_DS_
-                                           ;	.line	1628; "MC32P7351.c"	if (pwm_duty > 0)
+                                           ;	.line	1630; "MC32P7351.c"	if (pwm_duty > 0)
 0000a1   3c00     movai   0                	MOVAI	0x00
 0000a2   5c37     orar    0x37             	ORAR	_pwm_duty
 0000a3   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 0000a4   a0a7     goto    0xa7             	GOTO	_01058_DS_
-                                           ;	.line	1630; "MC32P7351.c"	pwm_duty--;
+                                           ;	.line	1632; "MC32P7351.c"	pwm_duty--;
 0000a5   6e37     decr    0x37             	DECR	_pwm_duty
 0000a6   a0a9     goto    0xa9             	GOTO	_01064_DS_
                                            _01058_DS_
-                                           ;	.line	1634; "MC32P7351.c"	pwm_duty = 0;
+                                           ;	.line	1636; "MC32P7351.c"	pwm_duty = 0;
 0000a7   7637     clrr    0x37             	CLRR	_pwm_duty
-                                           ;	.line	1635; "MC32P7351.c"	breath_direction = 0; // 切换到渐亮
+                                           ;	.line	1637; "MC32P7351.c"	breath_direction = 0; // 切换到渐亮
 0000a8   7638     clrr    0x38             	CLRR	_breath_direction
                                            _01064_DS_
-                                           ;	.line	1642; "MC32P7351.c"	if (led_state)
+                                           ;	.line	1644; "MC32P7351.c"	if (led_state)
 0000a9   3c00     movai   0                	MOVAI	0x00
 0000aa   5c33     orar    0x33             	ORAR	_led_state
 0000ab   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 0000ac   a0af     goto    0xaf             	GOTO	_01066_DS_
-                                           ;	.line	1644; "MC32P7351.c"	LED_CHARGING_PIN = LED_ON;
+                                           ;	.line	1646; "MC32P7351.c"	LED_CHARGING_PIN = LED_ON;
 0000ad   d990     bclr    0x190, 0x4       	BCLR	_IOP0bits,4
 0000ae   a0b0     goto    0xb0             	GOTO	_01069_DS_
                                            _01066_DS_
-                                           ;	.line	1648; "MC32P7351.c"	LED_CHARGING_PIN = LED_OFF;
+                                           ;	.line	1650; "MC32P7351.c"	LED_CHARGING_PIN = LED_OFF;
 0000af   c990     bset    0x190, 0x4       	BSET	_IOP0bits,4
                                            _01069_DS_
-                                           ;	.line	1652; "MC32P7351.c"	T3IF = 0;
+                                           ;	.line	1654; "MC32P7351.c"	T3IF = 0;
 0000b0   df8b     bclr    0x18b, 0x7       	BCLR	_INTFbits,7
                                            _01072_DS_
-                                           ;	.line	1660; "MC32P7351.c"	__endasm;
+                                           ;	.line	1662; "MC32P7351.c"	__endasm;
                                            	;
 0000b1   448d     swapar  0x8d             	swapar	_statusbuf;
 0000b2   5787     movra   0x187            	movra	_PFLAG;
@@ -838,7 +838,7 @@ Address  Value    Disassembly              Source
 0000b4   448c     swapar  0x8c             	swapar	_abuf;
                                            	
                                            END_OF_INTERRUPT
-                                           ;	.line	1661; "MC32P7351.c"	}
+                                           ;	.line	1663; "MC32P7351.c"	}
 0000b5   000d     retie                    	RETIE	
                                            
                                            ;--------------------------------------------------------
@@ -1102,8 +1102,8 @@ Address  Value    Disassembly              Source
 000136   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 000137   a13d     goto    0x13d            	GOTO	_00814_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1171; "MC32P7351.c"	tmp_bat_val += 200; // 
-000138   3cc8     movai   0xc8             	MOVAI	0xc8
+                                           ;	.line	1172; "MC32P7351.c"	tmp_bat_val += 240; // 
+000138   3cf0     movai   0xf0             	MOVAI	0xf0
 000139   7e82     addra   0x82             	ADDRA	_tmp_bat_val
 00013a   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 00013b   6683     incr    0x83             	INCR	(_tmp_bat_val + 1)
@@ -1111,7 +1111,7 @@ Address  Value    Disassembly              Source
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0xCFF=3327), size=4
                                            _00814_DS_
-                                           ;	.line	1173; "MC32P7351.c"	else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
+                                           ;	.line	1174; "MC32P7351.c"	else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
 00013d   3c00     movai   0                	MOVAI	0x00
 00013e   4875     rsubar  0x75             	RSUBAR	(_adc_bat_val + 3)
 00013f   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1130,14 +1130,14 @@ Address  Value    Disassembly              Source
 00014b   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 00014c   a152     goto    0x152            	GOTO	_00811_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1181; "MC32P7351.c"	tmp_bat_val += 190;
+                                           ;	.line	1182; "MC32P7351.c"	tmp_bat_val += 190;
 00014d   3cbe     movai   0xbe             	MOVAI	0xbe
 00014e   7e82     addra   0x82             	ADDRA	_tmp_bat_val
 00014f   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 000150   6683     incr    0x83             	INCR	(_tmp_bat_val + 1)
 000151   a191     goto    0x191            	GOTO	_00900_DS_
                                            _00811_DS_
-                                           ;	.line	1196; "MC32P7351.c"	tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
+                                           ;	.line	1197; "MC32P7351.c"	tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
 000152   5872     movar   0x72             	MOVAR	_adc_bat_val
 000153   5600     movra   0                	MOVRA	STK06
 000154   5873     movar   0x73             	MOVAR	(_adc_bat_val + 1)
@@ -1204,13 +1204,13 @@ Address  Value    Disassembly              Source
 00018f   6017     jzar    0x17             	JZAR	r0x105B
 000190   4a83     rsubra  0x83             	RSUBRA	(_tmp_bat_val + 1)
                                            _00900_DS_
-                                           ;	.line	1244; "MC32P7351.c"	for (i = 0; i < 90; i++)
+                                           ;	.line	1246; "MC32P7351.c"	for (i = 0; i < 50; i++)
 000191   7616     clrr    0x16             	CLRR	r0x105A
 000192   7617     clrr    0x17             	CLRR	r0x105B
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0x3=3), size=2
                                            _00874_DS_
-                                           ;	.line	1246; "MC32P7351.c"	if (tmp_bat_val > 2)
+                                           ;	.line	1248; "MC32P7351.c"	if (tmp_bat_val > 2)
 000193   3c00     movai   0                	MOVAI	0x00
 000194   4883     rsubar  0x83             	RSUBAR	(_tmp_bat_val + 1)
 000195   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1221,29 +1221,29 @@ Address  Value    Disassembly              Source
 000199   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00019a   a19f     goto    0x19f            	GOTO	_00875_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1248; "MC32P7351.c"	tmp_bat_val--;
+                                           ;	.line	1250; "MC32P7351.c"	tmp_bat_val--;
 00019b   3cff     movai   0xff             	MOVAI	0xff
 00019c   7e82     addra   0x82             	ADDRA	_tmp_bat_val
 00019d   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00019e   6e83     decr    0x83             	DECR	(_tmp_bat_val + 1)
                                            _00875_DS_
-                                           ;	.line	1244; "MC32P7351.c"	for (i = 0; i < 90; i++)
+                                           ;	.line	1246; "MC32P7351.c"	for (i = 0; i < 50; i++)
 00019f   6616     incr    0x16             	INCR	r0x105A
 0001a0   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 0001a1   6617     incr    0x17             	INCR	r0x105B
-                                           ;;unsigned compare: left < lit(0x5A=90), size=2
+                                           ;;unsigned compare: left < lit(0x32=50), size=2
 0001a2   3c00     movai   0                	MOVAI	0x00
 0001a3   4817     rsubar  0x17             	RSUBAR	r0x105B
 0001a4   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
 0001a5   a1a8     goto    0x1a8            	GOTO	_01014_DS_
-0001a6   3c5a     movai   0x5a             	MOVAI	0x5a
+0001a6   3c32     movai   0x32             	MOVAI	0x32
 0001a7   4816     rsubar  0x16             	RSUBAR	r0x105A
                                            _01014_DS_
 0001a8   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 0001a9   a193     goto    0x193            	GOTO	_00874_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            ;;unsigned compare: left < lit(0xE27=3623), size=4
-                                           ;	.line	1254; "MC32P7351.c"	if (adc_bat_val >= 3623) // 8.30V及以上 , 降低电流
+                                           ;	.line	1256; "MC32P7351.c"	if (adc_bat_val >= 3623) // 8.30V及以上 , 降低电流
 0001aa   3c00     movai   0                	MOVAI	0x00
 0001ab   4875     rsubar  0x75             	RSUBAR	(_adc_bat_val + 3)
 0001ac   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1262,13 +1262,13 @@ Address  Value    Disassembly              Source
 0001b8   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 0001b9   a1d3     goto    0x1d3            	GOTO	_00829_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1262; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA
+                                           ;	.line	1264; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA       --- 在客户那里测试是800
 0001ba   7616     clrr    0x16             	CLRR	r0x105A
 0001bb   7617     clrr    0x17             	CLRR	r0x105B
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0x3=3), size=2
                                            _00876_DS_
-                                           ;	.line	1267; "MC32P7351.c"	if (tmp_bat_val > 2)
+                                           ;	.line	1269; "MC32P7351.c"	if (tmp_bat_val > 2)
 0001bc   3c00     movai   0                	MOVAI	0x00
 0001bd   4883     rsubar  0x83             	RSUBAR	(_tmp_bat_val + 1)
 0001be   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1279,13 +1279,13 @@ Address  Value    Disassembly              Source
 0001c2   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 0001c3   a1c8     goto    0x1c8            	GOTO	_00877_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1269; "MC32P7351.c"	tmp_bat_val--;
+                                           ;	.line	1271; "MC32P7351.c"	tmp_bat_val--;
 0001c4   3cff     movai   0xff             	MOVAI	0xff
 0001c5   7e82     addra   0x82             	ADDRA	_tmp_bat_val
 0001c6   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 0001c7   6e83     decr    0x83             	DECR	(_tmp_bat_val + 1)
                                            _00877_DS_
-                                           ;	.line	1262; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA
+                                           ;	.line	1264; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA       --- 在客户那里测试是800
 0001c8   6616     incr    0x16             	INCR	r0x105A
 0001c9   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 0001ca   6617     incr    0x17             	INCR	r0x105B
@@ -1301,7 +1301,7 @@ Address  Value    Disassembly              Source
 0001d2   a1bc     goto    0x1bc            	GOTO	_00876_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00829_DS_
-                                           ;	.line	1318; "MC32P7351.c"	tmp_val = max_pwm_val - (adc_charging_val * max_pwm_val * 94 / 147) / tmp_bat_val;
+                                           ;	.line	1320; "MC32P7351.c"	tmp_val = max_pwm_val - (adc_charging_val * max_pwm_val * 94 / 147) / tmp_bat_val;
 0001d3   587c     movar   0x7c             	MOVAR	_adc_charging_val
 0001d4   5616     movra   0x16             	MOVRA	r0x105A
 0001d5   587d     movar   0x7d             	MOVAR	(_adc_charging_val + 1)
@@ -1422,7 +1422,7 @@ Address  Value    Disassembly              Source
 000246   641f     incar   0x1f             	INCAR	r0x1063
 000247   481d     rsubar  0x1d             	RSUBAR	r0x1061
 000248   5681     movra   0x81             	MOVRA	(_tmp_val + 1)
-                                           ;	.line	1323; "MC32P7351.c"	if (tmp_val >= max_pwm_val)
+                                           ;	.line	1325; "MC32P7351.c"	if (tmp_val >= max_pwm_val)
 000249   5880     movar   0x80             	MOVAR	_tmp_val
 00024a   5616     movra   0x16             	MOVRA	r0x105A
 00024b   5881     movar   0x81             	MOVAR	(_tmp_val + 1)
@@ -1447,16 +1447,16 @@ Address  Value    Disassembly              Source
 00025d   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 00025e   a261     goto    0x261            	GOTO	_00831_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1326; "MC32P7351.c"	tmp_val = 0;
+                                           ;	.line	1328; "MC32P7351.c"	tmp_val = 0;
 00025f   7680     clrr    0x80             	CLRR	_tmp_val
 000260   7681     clrr    0x81             	CLRR	(_tmp_val + 1)
                                            _00831_DS_
-                                           ;	.line	1330; "MC32P7351.c"	tmp_val_cnt++;
+                                           ;	.line	1332; "MC32P7351.c"	tmp_val_cnt++;
 000261   6688     incr    0x88             	INCR	_tmp_val_cnt
-                                           ;	.line	1331; "MC32P7351.c"	tmp_val_cnt &= 0x07;
+                                           ;	.line	1333; "MC32P7351.c"	tmp_val_cnt &= 0x07;
 000262   3c07     movai   0x7              	MOVAI	0x07
 000263   7a88     andra   0x88             	ANDRA	_tmp_val_cnt
-                                           ;	.line	1332; "MC32P7351.c"	tmp_val_l[tmp_val_cnt] = (tmp_val_l[tmp_val_cnt] + tmp_val) >> 1;
+                                           ;	.line	1334; "MC32P7351.c"	tmp_val_l[tmp_val_cnt] = (tmp_val_l[tmp_val_cnt] + tmp_val) >> 1;
 000264   d187     bclr    0x187, 0         	BCLR	PFLAG,0
 000265   5088     rlar    0x88             	RLAR	_tmp_val_cnt
 000266   5616     movra   0x16             	MOVRA	r0x105A
@@ -1514,10 +1514,10 @@ Address  Value    Disassembly              Source
 000298   6785     incr    0x185            	INCR	FSR1
 000299   581d     movar   0x1d             	MOVAR	r0x1061
 00029a   5782     movra   0x182            	MOVRA	INDF2
-                                           ;	.line	1333; "MC32P7351.c"	tmp_val = 0;
+                                           ;	.line	1335; "MC32P7351.c"	tmp_val = 0;
 00029b   7680     clrr    0x80             	CLRR	_tmp_val
 00029c   7681     clrr    0x81             	CLRR	(_tmp_val + 1)
-                                           ;	.line	1334; "MC32P7351.c"	for (i = 0; i < 8; i++)
+                                           ;	.line	1336; "MC32P7351.c"	for (i = 0; i < 8; i++)
 00029d   7687     clrr    0x87             	CLRR	_i
                                            ;;unsigned compare: left < lit(0x8=8), size=1
                                            _00879_DS_
@@ -1526,7 +1526,7 @@ Address  Value    Disassembly              Source
 0002a0   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 0002a1   a2bf     goto    0x2bf            	GOTO	_00832_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1336; "MC32P7351.c"	tmp_val += tmp_val_l[i];
+                                           ;	.line	1338; "MC32P7351.c"	tmp_val += tmp_val_l[i];
 0002a2   d187     bclr    0x187, 0         	BCLR	PFLAG,0
 0002a3   5087     rlar    0x87             	RLAR	_i
 0002a4   5616     movra   0x16             	MOVRA	r0x105A
@@ -1554,12 +1554,12 @@ Address  Value    Disassembly              Source
 0002ba   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 0002bb   601b     jzar    0x1b             	JZAR	r0x105F
 0002bc   7e81     addra   0x81             	ADDRA	(_tmp_val + 1)
-                                           ;	.line	1334; "MC32P7351.c"	for (i = 0; i < 8; i++)
+                                           ;	.line	1336; "MC32P7351.c"	for (i = 0; i < 8; i++)
 0002bd   6687     incr    0x87             	INCR	_i
 0002be   a29e     goto    0x29e            	GOTO	_00879_DS_
                                            ;;shiftRight_Left2ResultLit:5339: shCount=1, size=2, sign=0, same=1, offr=0
                                            _00832_DS_
-                                           ;	.line	1338; "MC32P7351.c"	tmp_val >>= 3;
+                                           ;	.line	1340; "MC32P7351.c"	tmp_val >>= 3;
 0002bf   d187     bclr    0x187, 0         	BCLR	PFLAG,0
 0002c0   4e81     rrr     0x81             	RRR	(_tmp_val + 1)
 0002c1   4e80     rrr     0x80             	RRR	_tmp_val
@@ -1571,9 +1571,9 @@ Address  Value    Disassembly              Source
 0002c5   d187     bclr    0x187, 0         	BCLR	PFLAG,0
 0002c6   4e81     rrr     0x81             	RRR	(_tmp_val + 1)
 0002c7   4e80     rrr     0x80             	RRR	_tmp_val
-                                           ;	.line	1346; "MC32P7351.c"	cnt++;
+                                           ;	.line	1348; "MC32P7351.c"	cnt++;
 0002c8   662a     incr    0x2a             	INCR	_main_cnt_262144_219
-                                           ;	.line	1348; "MC32P7351.c"	if (tmp_val > last_pwm_val)
+                                           ;	.line	1350; "MC32P7351.c"	if (tmp_val > last_pwm_val)
 0002c9   5881     movar   0x81             	MOVAR	(_tmp_val + 1)
 0002ca   487f     rsubar  0x7f             	RSUBAR	(_last_pwm_val + 1)
 0002cb   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1584,7 +1584,7 @@ Address  Value    Disassembly              Source
 0002cf   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 0002d0   a2ea     goto    0x2ea            	GOTO	_00842_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1350; "MC32P7351.c"	if ((tmp_val - last_pwm_val) > 2 || cnt >= 10)
+                                           ;	.line	1352; "MC32P7351.c"	if ((tmp_val - last_pwm_val) > 2 || cnt >= 10)
 0002d1   587e     movar   0x7e             	MOVAR	_last_pwm_val
 0002d2   4880     rsubar  0x80             	RSUBAR	_tmp_val
 0002d3   5616     movra   0x16             	MOVRA	r0x105A
@@ -1612,15 +1612,15 @@ Address  Value    Disassembly              Source
 0002e4   a30b     goto    0x30b            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00833_DS_
-                                           ;	.line	1352; "MC32P7351.c"	last_pwm_val++;
+                                           ;	.line	1354; "MC32P7351.c"	last_pwm_val++;
 0002e5   667e     incr    0x7e             	INCR	_last_pwm_val
 0002e6   f587     jbclr   0x187, 0x2       	JBCLR	PFLAG,2
 0002e7   667f     incr    0x7f             	INCR	(_last_pwm_val + 1)
-                                           ;	.line	1353; "MC32P7351.c"	cnt = 0;
+                                           ;	.line	1355; "MC32P7351.c"	cnt = 0;
 0002e8   762a     clrr    0x2a             	CLRR	_main_cnt_262144_219
 0002e9   a30b     goto    0x30b            	GOTO	_00843_DS_
                                            _00842_DS_
-                                           ;	.line	1356; "MC32P7351.c"	else if (tmp_val < last_pwm_val)
+                                           ;	.line	1358; "MC32P7351.c"	else if (tmp_val < last_pwm_val)
 0002ea   587f     movar   0x7f             	MOVAR	(_last_pwm_val + 1)
 0002eb   4881     rsubar  0x81             	RSUBAR	(_tmp_val + 1)
 0002ec   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
@@ -1631,7 +1631,7 @@ Address  Value    Disassembly              Source
 0002f0   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 0002f1   a30b     goto    0x30b            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1358; "MC32P7351.c"	if ((last_pwm_val - tmp_val) > 2 || cnt >= 10)
+                                           ;	.line	1360; "MC32P7351.c"	if ((last_pwm_val - tmp_val) > 2 || cnt >= 10)
 0002f2   5880     movar   0x80             	MOVAR	_tmp_val
 0002f3   487e     rsubar  0x7e             	RSUBAR	_last_pwm_val
 0002f4   5616     movra   0x16             	MOVRA	r0x105A
@@ -1659,45 +1659,45 @@ Address  Value    Disassembly              Source
 000305   a30b     goto    0x30b            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00836_DS_
-                                           ;	.line	1360; "MC32P7351.c"	last_pwm_val--;
+                                           ;	.line	1362; "MC32P7351.c"	last_pwm_val--;
 000306   3cff     movai   0xff             	MOVAI	0xff
 000307   7e7e     addra   0x7e             	ADDRA	_last_pwm_val
 000308   e187     jbset   0x187, 0         	JBSET	PFLAG,0
 000309   6e7f     decr    0x7f             	DECR	(_last_pwm_val + 1)
-                                           ;	.line	1361; "MC32P7351.c"	cnt = 0;
+                                           ;	.line	1363; "MC32P7351.c"	cnt = 0;
 00030a   762a     clrr    0x2a             	CLRR	_main_cnt_262144_219
                                            _00843_DS_
-                                           ;	.line	1422; "MC32P7351.c"	T2DATA = last_pwm_val;
+                                           ;	.line	1424; "MC32P7351.c"	T2DATA = last_pwm_val;
 00030b   587e     movar   0x7e             	MOVAR	_last_pwm_val
 00030c   57a3     movra   0x1a3            	MOVRA	_T2DATA
 00030d   a31a     goto    0x31a            	GOTO	_00854_DS_
                                            _00853_DS_
-                                           ;	.line	1427; "MC32P7351.c"	if (FLAG_DURING_CHARGING_BAT_IS_NULL)
+                                           ;	.line	1429; "MC32P7351.c"	if (FLAG_DURING_CHARGING_BAT_IS_NULL)
 00030e   ee8e     jbset   0x8e, 0x7        	JBSET	_flag1,7
 00030f   a31a     goto    0x31a            	GOTO	_00854_DS_
-                                           ;	.line	1430; "MC32P7351.c"	LED_FULL_CHARGE_ON();
+                                           ;	.line	1432; "MC32P7351.c"	LED_FULL_CHARGE_ON();
 000310   d790     bclr    0x190, 0x3       	BCLR	_IOP0bits,3
-                                           ;	.line	1431; "MC32P7351.c"	delay_ms(200);
+                                           ;	.line	1433; "MC32P7351.c"	delay_ms(200);
 000311   3cc8     movai   0xc8             	MOVAI	0xc8
 000312   5606     movra   0x6              	MOVRA	STK00
 000313   3c00     movai   0                	MOVAI	0x00
 000314   86d2     call    0x6d2            	CALL	_delay_ms
-                                           ;	.line	1432; "MC32P7351.c"	LED_FULL_CHARGE_OFF();
+                                           ;	.line	1434; "MC32P7351.c"	LED_FULL_CHARGE_OFF();
 000315   c790     bset    0x190, 0x3       	BSET	_IOP0bits,3
-                                           ;	.line	1433; "MC32P7351.c"	delay_ms(200);
+                                           ;	.line	1435; "MC32P7351.c"	delay_ms(200);
 000316   3cc8     movai   0xc8             	MOVAI	0xc8
 000317   5606     movra   0x6              	MOVRA	STK00
 000318   3c00     movai   0                	MOVAI	0x00
 000319   86d2     call    0x6d2            	CALL	_delay_ms
                                            _00854_DS_
-                                           ;	.line	1437; "MC32P7351.c"	if (flag_is_low_battery)
+                                           ;	.line	1439; "MC32P7351.c"	if (flag_is_low_battery)
 00031a   e48f     jbset   0x8f, 0x2        	JBSET	_flag2,2
 00031b   a337     goto    0x337            	GOTO	_00867_DS_
-                                           ;	.line	1439; "MC32P7351.c"	LED_WORKING_OFF();
+                                           ;	.line	1441; "MC32P7351.c"	LED_WORKING_OFF();
 00031c   c994     bset    0x194, 0x4       	BSET	_IOP1bits,4
-                                           ;	.line	1442; "MC32P7351.c"	LED_CHARGING_ON();
+                                           ;	.line	1444; "MC32P7351.c"	LED_CHARGING_ON();
 00031d   d990     bclr    0x190, 0x4       	BCLR	_IOP0bits,4
-                                           ;	.line	1444; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1446; "MC32P7351.c"	for (i = 0; i < 20; i++)
 00031e   7687     clrr    0x87             	CLRR	_i
                                            ;;unsigned compare: left < lit(0x14=20), size=1
                                            _00882_DS_
@@ -1706,20 +1706,20 @@ Address  Value    Disassembly              Source
 000321   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 000322   a32a     goto    0x32a            	GOTO	_00862_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1447; "MC32P7351.c"	key_event_handle();
+                                           ;	.line	1449; "MC32P7351.c"	key_event_handle();
 000323   84dd     call    0x4dd            	CALL	_key_event_handle
-                                           ;	.line	1448; "MC32P7351.c"	delay_ms(10);
+                                           ;	.line	1450; "MC32P7351.c"	delay_ms(10);
 000324   3c0a     movai   0xa              	MOVAI	0x0a
 000325   5606     movra   0x6              	MOVRA	STK00
 000326   3c00     movai   0                	MOVAI	0x00
 000327   86d2     call    0x6d2            	CALL	_delay_ms
-                                           ;	.line	1444; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1446; "MC32P7351.c"	for (i = 0; i < 20; i++)
 000328   6687     incr    0x87             	INCR	_i
 000329   a31f     goto    0x31f            	GOTO	_00882_DS_
                                            _00862_DS_
-                                           ;	.line	1451; "MC32P7351.c"	LED_CHARGING_OFF();
+                                           ;	.line	1453; "MC32P7351.c"	LED_CHARGING_OFF();
 00032a   c990     bset    0x190, 0x4       	BSET	_IOP0bits,4
-                                           ;	.line	1453; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1455; "MC32P7351.c"	for (i = 0; i < 20; i++)
 00032b   7687     clrr    0x87             	CLRR	_i
                                            ;;unsigned compare: left < lit(0x14=20), size=1
                                            _00885_DS_
@@ -1728,25 +1728,25 @@ Address  Value    Disassembly              Source
 00032e   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 00032f   a337     goto    0x337            	GOTO	_00867_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1456; "MC32P7351.c"	key_event_handle();
+                                           ;	.line	1458; "MC32P7351.c"	key_event_handle();
 000330   84dd     call    0x4dd            	CALL	_key_event_handle
-                                           ;	.line	1457; "MC32P7351.c"	delay_ms(10);
+                                           ;	.line	1459; "MC32P7351.c"	delay_ms(10);
 000331   3c0a     movai   0xa              	MOVAI	0x0a
 000332   5606     movra   0x6              	MOVRA	STK00
 000333   3c00     movai   0                	MOVAI	0x00
 000334   86d2     call    0x6d2            	CALL	_delay_ms
-                                           ;	.line	1453; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1455; "MC32P7351.c"	for (i = 0; i < 20; i++)
 000335   6687     incr    0x87             	INCR	_i
 000336   a32c     goto    0x32c            	GOTO	_00885_DS_
                                            _00867_DS_
-                                           ;	.line	1461; "MC32P7351.c"	low_power_scan_handle();
+                                           ;	.line	1463; "MC32P7351.c"	low_power_scan_handle();
 000337   833b     call    0x33b            	CALL	_low_power_scan_handle
-                                           ;	.line	1468; "MC32P7351.c"	__endasm;
+                                           ;	.line	1470; "MC32P7351.c"	__endasm;
                                            	;
 000338   000e     clrwdt                   	CLRWDT;
                                            	
 000339   a0d4     goto    0xd4             	GOTO	_00869_DS_
-                                           ;	.line	1471; "MC32P7351.c"	}
+                                           ;	.line	1473; "MC32P7351.c"	}
 00033a   000c     return                   	RETURN	
                                            ; exit point of _main
                                            
@@ -3490,7 +3490,7 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
                                            ; Version 2.0.0 (Dec 11 2019) (MINGW32)
-                                           ; This file was generated Wed Apr 23 18:16:33 2025
+                                           ; This file was generated Thu Apr 24 10:36:40 2025
                                            ;--------------------------------------------------------
                                            ; MC32 port for the RISC core
                                            ;--------------------------------------------------------
@@ -4060,13 +4060,13 @@ Address  Value    Disassembly              Source
                                            ;; Starting pCode block
                                            _int_isr	;Function start
                                            ; 0 exit points
-                                           ;	.line	1485; "MC32P7351.c"	__endasm;
+                                           ;	.line	1487; "MC32P7351.c"	__endasm;
                                            	;
                                            	movra	_abuf;
                                            	swapar	_PFLAG;
                                            	movra	_statusbuf;
                                            	
-                                           ;	.line	1492; "MC32P7351.c"	if (T3IF & T3IE)
+                                           ;	.line	1494; "MC32P7351.c"	if (T3IF & T3IE)
                                            	CLRR	r0x1064
                                            	JBCLR	_INTFbits,7
                                            	INCR	r0x1064
@@ -4079,35 +4079,35 @@ Address  Value    Disassembly              Source
                                            	ORAR	r0x1064
                                            	JBCLR	PFLAG,2
                                            	GOTO	_01072_DS_
-                                           ;	.line	1496; "MC32P7351.c"	__1ms_cnt++;
+                                           ;	.line	1498; "MC32P7351.c"	__1ms_cnt++;
                                            	INCR	_int_isr___1ms_cnt_196608_244
                                            ;;unsigned compare: left < lit(0xA=10), size=1
-                                           ;	.line	1497; "MC32P7351.c"	if (__1ms_cnt >= 10)
+                                           ;	.line	1499; "MC32P7351.c"	if (__1ms_cnt >= 10)
                                            	MOVAI	0x0a
                                            	RSUBAR	_int_isr___1ms_cnt_196608_244
                                            	JBSET	PFLAG,0
                                            	GOTO	_01049_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1499; "MC32P7351.c"	__1ms_cnt = 0;
+                                           ;	.line	1501; "MC32P7351.c"	__1ms_cnt = 0;
                                            	CLRR	_int_isr___1ms_cnt_196608_244
-                                           ;	.line	1503; "MC32P7351.c"	key_scan_cnt++;
+                                           ;	.line	1505; "MC32P7351.c"	key_scan_cnt++;
                                            	INCR	_int_isr_key_scan_cnt_327680_246
                                            ;;unsigned compare: left < lit(0xA=10), size=1
-                                           ;	.line	1504; "MC32P7351.c"	if (key_scan_cnt >= 10)
+                                           ;	.line	1506; "MC32P7351.c"	if (key_scan_cnt >= 10)
                                            	MOVAI	0x0a
                                            	RSUBAR	_int_isr_key_scan_cnt_327680_246
                                            	JBSET	PFLAG,0
                                            	GOTO	_01030_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1506; "MC32P7351.c"	key_scan_cnt = 0;
+                                           ;	.line	1508; "MC32P7351.c"	key_scan_cnt = 0;
                                            	CLRR	_int_isr_key_scan_cnt_327680_246
-                                           ;	.line	1507; "MC32P7351.c"	key_scan();
+                                           ;	.line	1509; "MC32P7351.c"	key_scan();
                                            	CALL	_key_scan
                                            _01030_DS_
-                                           ;	.line	1511; "MC32P7351.c"	if (FLAG_IS_DEVICE_OPEN)
+                                           ;	.line	1513; "MC32P7351.c"	if (FLAG_IS_DEVICE_OPEN)
                                            	JBSET	_flag1,0
                                            	GOTO	_01032_DS_
-                                           ;	.line	1513; "MC32P7351.c"	turn_dir_ms_cnt++;  // 会在 turn_dir_scan_handle() 内处理并清零
+                                           ;	.line	1515; "MC32P7351.c"	turn_dir_ms_cnt++;  // 会在 turn_dir_scan_handle() 内处理并清零
                                            	INCR	_turn_dir_ms_cnt
                                            	JBCLR	PFLAG,2
                                            	INCR	(_turn_dir_ms_cnt + 1)
@@ -4115,7 +4115,7 @@ Address  Value    Disassembly              Source
                                            	INCR	(_turn_dir_ms_cnt + 2)
                                            	JBCLR	PFLAG,2
                                            	INCR	(_turn_dir_ms_cnt + 3)
-                                           ;	.line	1514; "MC32P7351.c"	shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
+                                           ;	.line	1516; "MC32P7351.c"	shut_down_ms_cnt++; // 会在 shutdown_scan_handle() 内处理并清零
                                            	INCR	_shut_down_ms_cnt
                                            	JBCLR	PFLAG,2
                                            	INCR	(_shut_down_ms_cnt + 1)
@@ -4124,15 +4124,15 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,2
                                            	INCR	(_shut_down_ms_cnt + 3)
                                            _01032_DS_
-                                           ;	.line	1521; "MC32P7351.c"	if (flag_maybe_low_battery)
+                                           ;	.line	1523; "MC32P7351.c"	if (flag_maybe_low_battery)
                                            	JBSET	_flag3,2
                                            	GOTO	_01036_DS_
-                                           ;	.line	1523; "MC32P7351.c"	low_bat_cnt++;
+                                           ;	.line	1525; "MC32P7351.c"	low_bat_cnt++;
                                            	INCR	_int_isr_low_bat_cnt_327680_249
                                            	JBCLR	PFLAG,2
                                            	INCR	(_int_isr_low_bat_cnt_327680_249 + 1)
                                            ;;unsigned compare: left < lit(0x1388=5000), size=2
-                                           ;	.line	1525; "MC32P7351.c"	if (low_bat_cnt >= 5000) // xx ms
+                                           ;	.line	1527; "MC32P7351.c"	if (low_bat_cnt >= 5000) // xx ms
                                            	MOVAI	0x13
                                            	RSUBAR	(_int_isr_low_bat_cnt_327680_249 + 1)
                                            	JBSET	PFLAG,2
@@ -4143,26 +4143,26 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_01037_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1527; "MC32P7351.c"	low_bat_cnt = 0;
+                                           ;	.line	1529; "MC32P7351.c"	low_bat_cnt = 0;
                                            	CLRR	_int_isr_low_bat_cnt_327680_249
                                            	CLRR	(_int_isr_low_bat_cnt_327680_249 + 1)
-                                           ;	.line	1528; "MC32P7351.c"	flag_is_low_battery = 1;
+                                           ;	.line	1530; "MC32P7351.c"	flag_is_low_battery = 1;
                                            	BSET	_flag2,2
                                            	GOTO	_01037_DS_
                                            _01036_DS_
-                                           ;	.line	1533; "MC32P7351.c"	low_bat_cnt = 0;
+                                           ;	.line	1535; "MC32P7351.c"	low_bat_cnt = 0;
                                            	CLRR	_int_isr_low_bat_cnt_327680_249
                                            	CLRR	(_int_isr_low_bat_cnt_327680_249 + 1)
                                            _01037_DS_
-                                           ;	.line	1552; "MC32P7351.c"	if (flag_tim_scan_maybe_shut_down)
+                                           ;	.line	1554; "MC32P7351.c"	if (flag_tim_scan_maybe_shut_down)
                                            	JBSET	_flag3,3
                                            	GOTO	_01041_DS_
-                                           ;	.line	1554; "MC32P7351.c"	shut_down_bat_cnt++;
+                                           ;	.line	1556; "MC32P7351.c"	shut_down_bat_cnt++;
                                            	INCR	_int_isr_shut_down_bat_cnt_327680_253
                                            	JBCLR	PFLAG,2
                                            	INCR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
                                            ;;unsigned compare: left < lit(0x3E8=1000), size=2
-                                           ;	.line	1555; "MC32P7351.c"	if (shut_down_bat_cnt >= 1000) // xx ms
+                                           ;	.line	1557; "MC32P7351.c"	if (shut_down_bat_cnt >= 1000) // xx ms
                                            	MOVAI	0x03
                                            	RSUBAR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
                                            	JBSET	PFLAG,2
@@ -4173,28 +4173,28 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_01042_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1557; "MC32P7351.c"	shut_down_bat_cnt = 0;
+                                           ;	.line	1559; "MC32P7351.c"	shut_down_bat_cnt = 0;
                                            	CLRR	_int_isr_shut_down_bat_cnt_327680_253
                                            	CLRR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
-                                           ;	.line	1558; "MC32P7351.c"	flag_is_needed_shut_down = 1;
+                                           ;	.line	1560; "MC32P7351.c"	flag_is_needed_shut_down = 1;
                                            	BSET	_flag3,4
                                            	GOTO	_01042_DS_
                                            _01041_DS_
-                                           ;	.line	1563; "MC32P7351.c"	shut_down_bat_cnt = 0;
+                                           ;	.line	1565; "MC32P7351.c"	shut_down_bat_cnt = 0;
                                            	CLRR	_int_isr_shut_down_bat_cnt_327680_253
                                            	CLRR	(_int_isr_shut_down_bat_cnt_327680_253 + 1)
-                                           ;	.line	1564; "MC32P7351.c"	flag_is_needed_shut_down = 0;
+                                           ;	.line	1566; "MC32P7351.c"	flag_is_needed_shut_down = 0;
                                            	BCLR	_flag3,4
                                            _01042_DS_
-                                           ;	.line	1570; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING)
+                                           ;	.line	1572; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING)
                                            	JBSET	_flag1,2
                                            	GOTO	_01046_DS_
-                                           ;	.line	1572; "MC32P7351.c"	update_current_time_cnt++;
+                                           ;	.line	1574; "MC32P7351.c"	update_current_time_cnt++;
                                            	INCR	_int_isr_update_current_time_cnt_327680_257
                                            	JBCLR	PFLAG,2
                                            	INCR	(_int_isr_update_current_time_cnt_327680_257 + 1)
                                            ;;unsigned compare: left < lit(0x1F4=500), size=2
-                                           ;	.line	1573; "MC32P7351.c"	if (update_current_time_cnt >= 500)
+                                           ;	.line	1575; "MC32P7351.c"	if (update_current_time_cnt >= 500)
                                            	MOVAI	0x01
                                            	RSUBAR	(_int_isr_update_current_time_cnt_327680_257 + 1)
                                            	JBSET	PFLAG,2
@@ -4205,22 +4205,22 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_01049_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1575; "MC32P7351.c"	update_current_time_cnt = 0;
+                                           ;	.line	1577; "MC32P7351.c"	update_current_time_cnt = 0;
                                            	CLRR	_int_isr_update_current_time_cnt_327680_257
                                            	CLRR	(_int_isr_update_current_time_cnt_327680_257 + 1)
-                                           ;	.line	1576; "MC32P7351.c"	flag_is_update_current = 1;
+                                           ;	.line	1578; "MC32P7351.c"	flag_is_update_current = 1;
                                            	BSET	_flag3,5
                                            	GOTO	_01049_DS_
                                            _01046_DS_
-                                           ;	.line	1581; "MC32P7351.c"	FLAG_IS_IN_CHARGING = 0;
+                                           ;	.line	1583; "MC32P7351.c"	FLAG_IS_IN_CHARGING = 0;
                                            	BCLR	_flag1,2
                                            _01049_DS_
-                                           ;	.line	1589; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
+                                           ;	.line	1591; "MC32P7351.c"	if (FLAG_IS_IN_CHARGING && 0 == FLAG_BAT_IS_FULL)
                                            	JBSET	_flag1,2
                                            	GOTO	_01069_DS_
                                            	JBCLR	_flag1,5
                                            	GOTO	_01069_DS_
-                                           ;	.line	1592; "MC32P7351.c"	if (pwm_counter < pwm_duty)
+                                           ;	.line	1594; "MC32P7351.c"	if (pwm_counter < pwm_duty)
                                            	MOVAR	_pwm_duty
                                            	MOVRA	r0x1064
                                            	CLRR	r0x1065
@@ -4234,20 +4234,20 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_01051_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1594; "MC32P7351.c"	led_state = 1; // LED亮
+                                           ;	.line	1596; "MC32P7351.c"	led_state = 1; // LED亮
                                            	MOVAI	0x01
                                            	MOVRA	_led_state
                                            	GOTO	_01052_DS_
                                            _01051_DS_
-                                           ;	.line	1598; "MC32P7351.c"	led_state = 0; // LED灭
+                                           ;	.line	1600; "MC32P7351.c"	led_state = 0; // LED灭
                                            	CLRR	_led_state
                                            _01052_DS_
-                                           ;	.line	1602; "MC32P7351.c"	pwm_counter++;
+                                           ;	.line	1604; "MC32P7351.c"	pwm_counter++;
                                            	INCR	_pwm_counter
                                            	JBCLR	PFLAG,2
                                            	INCR	(_pwm_counter + 1)
                                            ;;unsigned compare: left < lit(0x64=100), size=2
-                                           ;	.line	1603; "MC32P7351.c"	if (pwm_counter >= PWM_MAX_LEVEL)
+                                           ;	.line	1605; "MC32P7351.c"	if (pwm_counter >= PWM_MAX_LEVEL)
                                            	MOVAI	0x00
                                            	RSUBAR	(_pwm_counter + 1)
                                            	JBSET	PFLAG,2
@@ -4258,73 +4258,73 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_01054_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1605; "MC32P7351.c"	pwm_counter = 0;
+                                           ;	.line	1607; "MC32P7351.c"	pwm_counter = 0;
                                            	CLRR	_pwm_counter
                                            	CLRR	(_pwm_counter + 1)
                                            _01054_DS_
-                                           ;	.line	1609; "MC32P7351.c"	breath_counter++;
+                                           ;	.line	1611; "MC32P7351.c"	breath_counter++;
                                            	INCR	_breath_counter
                                            ;;unsigned compare: left < lit(0xC8=200), size=1
-                                           ;	.line	1610; "MC32P7351.c"	if (breath_counter >= BREATH_PERIOD)
+                                           ;	.line	1612; "MC32P7351.c"	if (breath_counter >= BREATH_PERIOD)
                                            	MOVAI	0xc8
                                            	RSUBAR	_breath_counter
                                            	JBSET	PFLAG,0
                                            	GOTO	_01064_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1612; "MC32P7351.c"	breath_counter = 0;
+                                           ;	.line	1614; "MC32P7351.c"	breath_counter = 0;
                                            	CLRR	_breath_counter
-                                           ;	.line	1615; "MC32P7351.c"	if (breath_direction == 0)
+                                           ;	.line	1617; "MC32P7351.c"	if (breath_direction == 0)
                                            	MOVAI	0x00
                                            	ORAR	_breath_direction
                                            	JBSET	PFLAG,2
                                            	GOTO	_01061_DS_
-                                           ;	.line	1618; "MC32P7351.c"	pwm_duty++;
+                                           ;	.line	1620; "MC32P7351.c"	pwm_duty++;
                                            	INCR	_pwm_duty
                                            ;;unsigned compare: left < lit(0x64=100), size=1
-                                           ;	.line	1619; "MC32P7351.c"	if (pwm_duty >= PWM_MAX_LEVEL)
+                                           ;	.line	1621; "MC32P7351.c"	if (pwm_duty >= PWM_MAX_LEVEL)
                                            	MOVAI	0x64
                                            	RSUBAR	_pwm_duty
                                            	JBSET	PFLAG,0
                                            	GOTO	_01064_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1621; "MC32P7351.c"	pwm_duty = PWM_MAX_LEVEL;
+                                           ;	.line	1623; "MC32P7351.c"	pwm_duty = PWM_MAX_LEVEL;
                                            	MOVAI	0x64
                                            	MOVRA	_pwm_duty
-                                           ;	.line	1622; "MC32P7351.c"	breath_direction = 1; // 切换到渐暗
+                                           ;	.line	1624; "MC32P7351.c"	breath_direction = 1; // 切换到渐暗
                                            	MOVAI	0x01
                                            	MOVRA	_breath_direction
                                            	GOTO	_01064_DS_
                                            _01061_DS_
-                                           ;	.line	1628; "MC32P7351.c"	if (pwm_duty > 0)
+                                           ;	.line	1630; "MC32P7351.c"	if (pwm_duty > 0)
                                            	MOVAI	0x00
                                            	ORAR	_pwm_duty
                                            	JBCLR	PFLAG,2
                                            	GOTO	_01058_DS_
-                                           ;	.line	1630; "MC32P7351.c"	pwm_duty--;
+                                           ;	.line	1632; "MC32P7351.c"	pwm_duty--;
                                            	DECR	_pwm_duty
                                            	GOTO	_01064_DS_
                                            _01058_DS_
-                                           ;	.line	1634; "MC32P7351.c"	pwm_duty = 0;
+                                           ;	.line	1636; "MC32P7351.c"	pwm_duty = 0;
                                            	CLRR	_pwm_duty
-                                           ;	.line	1635; "MC32P7351.c"	breath_direction = 0; // 切换到渐亮
+                                           ;	.line	1637; "MC32P7351.c"	breath_direction = 0; // 切换到渐亮
                                            	CLRR	_breath_direction
                                            _01064_DS_
-                                           ;	.line	1642; "MC32P7351.c"	if (led_state)
+                                           ;	.line	1644; "MC32P7351.c"	if (led_state)
                                            	MOVAI	0x00
                                            	ORAR	_led_state
                                            	JBCLR	PFLAG,2
                                            	GOTO	_01066_DS_
-                                           ;	.line	1644; "MC32P7351.c"	LED_CHARGING_PIN = LED_ON;
+                                           ;	.line	1646; "MC32P7351.c"	LED_CHARGING_PIN = LED_ON;
                                            	BCLR	_IOP0bits,4
                                            	GOTO	_01069_DS_
                                            _01066_DS_
-                                           ;	.line	1648; "MC32P7351.c"	LED_CHARGING_PIN = LED_OFF;
+                                           ;	.line	1650; "MC32P7351.c"	LED_CHARGING_PIN = LED_OFF;
                                            	BSET	_IOP0bits,4
                                            _01069_DS_
-                                           ;	.line	1652; "MC32P7351.c"	T3IF = 0;
+                                           ;	.line	1654; "MC32P7351.c"	T3IF = 0;
                                            	BCLR	_INTFbits,7
                                            _01072_DS_
-                                           ;	.line	1660; "MC32P7351.c"	__endasm;
+                                           ;	.line	1662; "MC32P7351.c"	__endasm;
                                            	;
                                            	swapar	_statusbuf;
                                            	movra	_PFLAG;
@@ -4332,7 +4332,7 @@ Address  Value    Disassembly              Source
                                            	swapar	_abuf;
                                            	
                                            END_OF_INTERRUPT
-                                           ;	.line	1661; "MC32P7351.c"	}
+                                           ;	.line	1663; "MC32P7351.c"	}
                                            	RETIE	
                                            
                                            ;--------------------------------------------------------
@@ -4596,8 +4596,8 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00814_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1171; "MC32P7351.c"	tmp_bat_val += 200; // 
-                                           	MOVAI	0xc8
+                                           ;	.line	1172; "MC32P7351.c"	tmp_bat_val += 240; // 
+                                           	MOVAI	0xf0
                                            	ADDRA	_tmp_bat_val
                                            	JBCLR	PFLAG,0
                                            	INCR	(_tmp_bat_val + 1)
@@ -4605,7 +4605,7 @@ Address  Value    Disassembly              Source
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0xCFF=3327), size=4
                                            _00814_DS_
-                                           ;	.line	1173; "MC32P7351.c"	else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
+                                           ;	.line	1174; "MC32P7351.c"	else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
                                            	MOVAI	0x00
                                            	RSUBAR	(_adc_bat_val + 3)
                                            	JBSET	PFLAG,2
@@ -4624,14 +4624,14 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00811_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1181; "MC32P7351.c"	tmp_bat_val += 190;
+                                           ;	.line	1182; "MC32P7351.c"	tmp_bat_val += 190;
                                            	MOVAI	0xbe
                                            	ADDRA	_tmp_bat_val
                                            	JBCLR	PFLAG,0
                                            	INCR	(_tmp_bat_val + 1)
                                            	GOTO	_00900_DS_
                                            _00811_DS_
-                                           ;	.line	1196; "MC32P7351.c"	tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
+                                           ;	.line	1197; "MC32P7351.c"	tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
                                            	MOVAR	_adc_bat_val
                                            	MOVRA	STK06
                                            	MOVAR	(_adc_bat_val + 1)
@@ -4698,13 +4698,13 @@ Address  Value    Disassembly              Source
                                            	JZAR	r0x105B
                                            	RSUBRA	(_tmp_bat_val + 1)
                                            _00900_DS_
-                                           ;	.line	1244; "MC32P7351.c"	for (i = 0; i < 90; i++)
+                                           ;	.line	1246; "MC32P7351.c"	for (i = 0; i < 50; i++)
                                            	CLRR	r0x105A
                                            	CLRR	r0x105B
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0x3=3), size=2
                                            _00874_DS_
-                                           ;	.line	1246; "MC32P7351.c"	if (tmp_bat_val > 2)
+                                           ;	.line	1248; "MC32P7351.c"	if (tmp_bat_val > 2)
                                            	MOVAI	0x00
                                            	RSUBAR	(_tmp_bat_val + 1)
                                            	JBSET	PFLAG,2
@@ -4715,29 +4715,29 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_00875_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1248; "MC32P7351.c"	tmp_bat_val--;
+                                           ;	.line	1250; "MC32P7351.c"	tmp_bat_val--;
                                            	MOVAI	0xff
                                            	ADDRA	_tmp_bat_val
                                            	JBSET	PFLAG,0
                                            	DECR	(_tmp_bat_val + 1)
                                            _00875_DS_
-                                           ;	.line	1244; "MC32P7351.c"	for (i = 0; i < 90; i++)
+                                           ;	.line	1246; "MC32P7351.c"	for (i = 0; i < 50; i++)
                                            	INCR	r0x105A
                                            	JBCLR	PFLAG,2
                                            	INCR	r0x105B
-                                           ;;unsigned compare: left < lit(0x5A=90), size=2
+                                           ;;unsigned compare: left < lit(0x32=50), size=2
                                            	MOVAI	0x00
                                            	RSUBAR	r0x105B
                                            	JBSET	PFLAG,2
                                            	GOTO	_01014_DS_
-                                           	MOVAI	0x5a
+                                           	MOVAI	0x32
                                            	RSUBAR	r0x105A
                                            _01014_DS_
                                            	JBSET	PFLAG,0
                                            	GOTO	_00874_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            ;;unsigned compare: left < lit(0xE27=3623), size=4
-                                           ;	.line	1254; "MC32P7351.c"	if (adc_bat_val >= 3623) // 8.30V及以上 , 降低电流
+                                           ;	.line	1256; "MC32P7351.c"	if (adc_bat_val >= 3623) // 8.30V及以上 , 降低电流
                                            	MOVAI	0x00
                                            	RSUBAR	(_adc_bat_val + 3)
                                            	JBSET	PFLAG,2
@@ -4756,13 +4756,13 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_00829_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1262; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA
+                                           ;	.line	1264; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA       --- 在客户那里测试是800
                                            	CLRR	r0x105A
                                            	CLRR	r0x105B
                                            ;;swapping arguments (AOP_TYPEs 1/3)
                                            ;;unsigned compare: left >= lit(0x3=3), size=2
                                            _00876_DS_
-                                           ;	.line	1267; "MC32P7351.c"	if (tmp_bat_val > 2)
+                                           ;	.line	1269; "MC32P7351.c"	if (tmp_bat_val > 2)
                                            	MOVAI	0x00
                                            	RSUBAR	(_tmp_bat_val + 1)
                                            	JBSET	PFLAG,2
@@ -4773,13 +4773,13 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_00877_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1269; "MC32P7351.c"	tmp_bat_val--;
+                                           ;	.line	1271; "MC32P7351.c"	tmp_bat_val--;
                                            	MOVAI	0xff
                                            	ADDRA	_tmp_bat_val
                                            	JBSET	PFLAG,0
                                            	DECR	(_tmp_bat_val + 1)
                                            _00877_DS_
-                                           ;	.line	1262; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA
+                                           ;	.line	1264; "MC32P7351.c"	for (i = 0; i < 220; i++) // 660mA       --- 在客户那里测试是800
                                            	INCR	r0x105A
                                            	JBCLR	PFLAG,2
                                            	INCR	r0x105B
@@ -4795,7 +4795,7 @@ Address  Value    Disassembly              Source
                                            	GOTO	_00876_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00829_DS_
-                                           ;	.line	1318; "MC32P7351.c"	tmp_val = max_pwm_val - (adc_charging_val * max_pwm_val * 94 / 147) / tmp_bat_val;
+                                           ;	.line	1320; "MC32P7351.c"	tmp_val = max_pwm_val - (adc_charging_val * max_pwm_val * 94 / 147) / tmp_bat_val;
                                            	MOVAR	_adc_charging_val
                                            	MOVRA	r0x105A
                                            	MOVAR	(_adc_charging_val + 1)
@@ -4916,7 +4916,7 @@ Address  Value    Disassembly              Source
                                            	INCAR	r0x1063
                                            	RSUBAR	r0x1061
                                            	MOVRA	(_tmp_val + 1)
-                                           ;	.line	1323; "MC32P7351.c"	if (tmp_val >= max_pwm_val)
+                                           ;	.line	1325; "MC32P7351.c"	if (tmp_val >= max_pwm_val)
                                            	MOVAR	_tmp_val
                                            	MOVRA	r0x105A
                                            	MOVAR	(_tmp_val + 1)
@@ -4941,16 +4941,16 @@ Address  Value    Disassembly              Source
                                            	JBSET	PFLAG,0
                                            	GOTO	_00831_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1326; "MC32P7351.c"	tmp_val = 0;
+                                           ;	.line	1328; "MC32P7351.c"	tmp_val = 0;
                                            	CLRR	_tmp_val
                                            	CLRR	(_tmp_val + 1)
                                            _00831_DS_
-                                           ;	.line	1330; "MC32P7351.c"	tmp_val_cnt++;
+                                           ;	.line	1332; "MC32P7351.c"	tmp_val_cnt++;
                                            	INCR	_tmp_val_cnt
-                                           ;	.line	1331; "MC32P7351.c"	tmp_val_cnt &= 0x07;
+                                           ;	.line	1333; "MC32P7351.c"	tmp_val_cnt &= 0x07;
                                            	MOVAI	0x07
                                            	ANDRA	_tmp_val_cnt
-                                           ;	.line	1332; "MC32P7351.c"	tmp_val_l[tmp_val_cnt] = (tmp_val_l[tmp_val_cnt] + tmp_val) >> 1;
+                                           ;	.line	1334; "MC32P7351.c"	tmp_val_l[tmp_val_cnt] = (tmp_val_l[tmp_val_cnt] + tmp_val) >> 1;
                                            	BCLR	PFLAG,0
                                            	RLAR	_tmp_val_cnt
                                            	MOVRA	r0x105A
@@ -5008,10 +5008,10 @@ Address  Value    Disassembly              Source
                                            	INCR	FSR1
                                            	MOVAR	r0x1061
                                            	MOVRA	INDF2
-                                           ;	.line	1333; "MC32P7351.c"	tmp_val = 0;
+                                           ;	.line	1335; "MC32P7351.c"	tmp_val = 0;
                                            	CLRR	_tmp_val
                                            	CLRR	(_tmp_val + 1)
-                                           ;	.line	1334; "MC32P7351.c"	for (i = 0; i < 8; i++)
+                                           ;	.line	1336; "MC32P7351.c"	for (i = 0; i < 8; i++)
                                            	CLRR	_i
                                            ;;unsigned compare: left < lit(0x8=8), size=1
                                            _00879_DS_
@@ -5020,7 +5020,7 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00832_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1336; "MC32P7351.c"	tmp_val += tmp_val_l[i];
+                                           ;	.line	1338; "MC32P7351.c"	tmp_val += tmp_val_l[i];
                                            	BCLR	PFLAG,0
                                            	RLAR	_i
                                            	MOVRA	r0x105A
@@ -5048,12 +5048,12 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	JZAR	r0x105F
                                            	ADDRA	(_tmp_val + 1)
-                                           ;	.line	1334; "MC32P7351.c"	for (i = 0; i < 8; i++)
+                                           ;	.line	1336; "MC32P7351.c"	for (i = 0; i < 8; i++)
                                            	INCR	_i
                                            	GOTO	_00879_DS_
                                            ;;shiftRight_Left2ResultLit:5339: shCount=1, size=2, sign=0, same=1, offr=0
                                            _00832_DS_
-                                           ;	.line	1338; "MC32P7351.c"	tmp_val >>= 3;
+                                           ;	.line	1340; "MC32P7351.c"	tmp_val >>= 3;
                                            	BCLR	PFLAG,0
                                            	RRR	(_tmp_val + 1)
                                            	RRR	_tmp_val
@@ -5065,9 +5065,9 @@ Address  Value    Disassembly              Source
                                            	BCLR	PFLAG,0
                                            	RRR	(_tmp_val + 1)
                                            	RRR	_tmp_val
-                                           ;	.line	1346; "MC32P7351.c"	cnt++;
+                                           ;	.line	1348; "MC32P7351.c"	cnt++;
                                            	INCR	_main_cnt_262144_219
-                                           ;	.line	1348; "MC32P7351.c"	if (tmp_val > last_pwm_val)
+                                           ;	.line	1350; "MC32P7351.c"	if (tmp_val > last_pwm_val)
                                            	MOVAR	(_tmp_val + 1)
                                            	RSUBAR	(_last_pwm_val + 1)
                                            	JBSET	PFLAG,2
@@ -5078,7 +5078,7 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00842_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1350; "MC32P7351.c"	if ((tmp_val - last_pwm_val) > 2 || cnt >= 10)
+                                           ;	.line	1352; "MC32P7351.c"	if ((tmp_val - last_pwm_val) > 2 || cnt >= 10)
                                            	MOVAR	_last_pwm_val
                                            	RSUBAR	_tmp_val
                                            	MOVRA	r0x105A
@@ -5106,15 +5106,15 @@ Address  Value    Disassembly              Source
                                            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00833_DS_
-                                           ;	.line	1352; "MC32P7351.c"	last_pwm_val++;
+                                           ;	.line	1354; "MC32P7351.c"	last_pwm_val++;
                                            	INCR	_last_pwm_val
                                            	JBCLR	PFLAG,2
                                            	INCR	(_last_pwm_val + 1)
-                                           ;	.line	1353; "MC32P7351.c"	cnt = 0;
+                                           ;	.line	1355; "MC32P7351.c"	cnt = 0;
                                            	CLRR	_main_cnt_262144_219
                                            	GOTO	_00843_DS_
                                            _00842_DS_
-                                           ;	.line	1356; "MC32P7351.c"	else if (tmp_val < last_pwm_val)
+                                           ;	.line	1358; "MC32P7351.c"	else if (tmp_val < last_pwm_val)
                                            	MOVAR	(_last_pwm_val + 1)
                                            	RSUBAR	(_tmp_val + 1)
                                            	JBSET	PFLAG,2
@@ -5125,7 +5125,7 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1358; "MC32P7351.c"	if ((last_pwm_val - tmp_val) > 2 || cnt >= 10)
+                                           ;	.line	1360; "MC32P7351.c"	if ((last_pwm_val - tmp_val) > 2 || cnt >= 10)
                                            	MOVAR	_tmp_val
                                            	RSUBAR	_last_pwm_val
                                            	MOVRA	r0x105A
@@ -5153,45 +5153,45 @@ Address  Value    Disassembly              Source
                                            	GOTO	_00843_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
                                            _00836_DS_
-                                           ;	.line	1360; "MC32P7351.c"	last_pwm_val--;
+                                           ;	.line	1362; "MC32P7351.c"	last_pwm_val--;
                                            	MOVAI	0xff
                                            	ADDRA	_last_pwm_val
                                            	JBSET	PFLAG,0
                                            	DECR	(_last_pwm_val + 1)
-                                           ;	.line	1361; "MC32P7351.c"	cnt = 0;
+                                           ;	.line	1363; "MC32P7351.c"	cnt = 0;
                                            	CLRR	_main_cnt_262144_219
                                            _00843_DS_
-                                           ;	.line	1422; "MC32P7351.c"	T2DATA = last_pwm_val;
+                                           ;	.line	1424; "MC32P7351.c"	T2DATA = last_pwm_val;
                                            	MOVAR	_last_pwm_val
                                            	MOVRA	_T2DATA
                                            	GOTO	_00854_DS_
                                            _00853_DS_
-                                           ;	.line	1427; "MC32P7351.c"	if (FLAG_DURING_CHARGING_BAT_IS_NULL)
+                                           ;	.line	1429; "MC32P7351.c"	if (FLAG_DURING_CHARGING_BAT_IS_NULL)
                                            	JBSET	_flag1,7
                                            	GOTO	_00854_DS_
-                                           ;	.line	1430; "MC32P7351.c"	LED_FULL_CHARGE_ON();
+                                           ;	.line	1432; "MC32P7351.c"	LED_FULL_CHARGE_ON();
                                            	BCLR	_IOP0bits,3
-                                           ;	.line	1431; "MC32P7351.c"	delay_ms(200);
-                                           	MOVAI	0xc8
-                                           	MOVRA	STK00
-                                           	MOVAI	0x00
-                                           	CALL	_delay_ms
-                                           ;	.line	1432; "MC32P7351.c"	LED_FULL_CHARGE_OFF();
-                                           	BSET	_IOP0bits,3
                                            ;	.line	1433; "MC32P7351.c"	delay_ms(200);
                                            	MOVAI	0xc8
                                            	MOVRA	STK00
                                            	MOVAI	0x00
                                            	CALL	_delay_ms
+                                           ;	.line	1434; "MC32P7351.c"	LED_FULL_CHARGE_OFF();
+                                           	BSET	_IOP0bits,3
+                                           ;	.line	1435; "MC32P7351.c"	delay_ms(200);
+                                           	MOVAI	0xc8
+                                           	MOVRA	STK00
+                                           	MOVAI	0x00
+                                           	CALL	_delay_ms
                                            _00854_DS_
-                                           ;	.line	1437; "MC32P7351.c"	if (flag_is_low_battery)
+                                           ;	.line	1439; "MC32P7351.c"	if (flag_is_low_battery)
                                            	JBSET	_flag2,2
                                            	GOTO	_00867_DS_
-                                           ;	.line	1439; "MC32P7351.c"	LED_WORKING_OFF();
+                                           ;	.line	1441; "MC32P7351.c"	LED_WORKING_OFF();
                                            	BSET	_IOP1bits,4
-                                           ;	.line	1442; "MC32P7351.c"	LED_CHARGING_ON();
+                                           ;	.line	1444; "MC32P7351.c"	LED_CHARGING_ON();
                                            	BCLR	_IOP0bits,4
-                                           ;	.line	1444; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1446; "MC32P7351.c"	for (i = 0; i < 20; i++)
                                            	CLRR	_i
                                            ;;unsigned compare: left < lit(0x14=20), size=1
                                            _00882_DS_
@@ -5200,20 +5200,20 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00862_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1447; "MC32P7351.c"	key_event_handle();
+                                           ;	.line	1449; "MC32P7351.c"	key_event_handle();
                                            	CALL	_key_event_handle
-                                           ;	.line	1448; "MC32P7351.c"	delay_ms(10);
+                                           ;	.line	1450; "MC32P7351.c"	delay_ms(10);
                                            	MOVAI	0x0a
                                            	MOVRA	STK00
                                            	MOVAI	0x00
                                            	CALL	_delay_ms
-                                           ;	.line	1444; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1446; "MC32P7351.c"	for (i = 0; i < 20; i++)
                                            	INCR	_i
                                            	GOTO	_00882_DS_
                                            _00862_DS_
-                                           ;	.line	1451; "MC32P7351.c"	LED_CHARGING_OFF();
+                                           ;	.line	1453; "MC32P7351.c"	LED_CHARGING_OFF();
                                            	BSET	_IOP0bits,4
-                                           ;	.line	1453; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1455; "MC32P7351.c"	for (i = 0; i < 20; i++)
                                            	CLRR	_i
                                            ;;unsigned compare: left < lit(0x14=20), size=1
                                            _00885_DS_
@@ -5222,25 +5222,25 @@ Address  Value    Disassembly              Source
                                            	JBCLR	PFLAG,0
                                            	GOTO	_00867_DS_
                                            ;;genSkipc:3291: created from rifx:013B5EFC
-                                           ;	.line	1456; "MC32P7351.c"	key_event_handle();
+                                           ;	.line	1458; "MC32P7351.c"	key_event_handle();
                                            	CALL	_key_event_handle
-                                           ;	.line	1457; "MC32P7351.c"	delay_ms(10);
+                                           ;	.line	1459; "MC32P7351.c"	delay_ms(10);
                                            	MOVAI	0x0a
                                            	MOVRA	STK00
                                            	MOVAI	0x00
                                            	CALL	_delay_ms
-                                           ;	.line	1453; "MC32P7351.c"	for (i = 0; i < 20; i++)
+                                           ;	.line	1455; "MC32P7351.c"	for (i = 0; i < 20; i++)
                                            	INCR	_i
                                            	GOTO	_00885_DS_
                                            _00867_DS_
-                                           ;	.line	1461; "MC32P7351.c"	low_power_scan_handle();
+                                           ;	.line	1463; "MC32P7351.c"	low_power_scan_handle();
                                            	CALL	_low_power_scan_handle
-                                           ;	.line	1468; "MC32P7351.c"	__endasm;
+                                           ;	.line	1470; "MC32P7351.c"	__endasm;
                                            	;
                                            	CLRWDT;
                                            	
                                            	GOTO	_00869_DS_
-                                           ;	.line	1471; "MC32P7351.c"	}
+                                           ;	.line	1473; "MC32P7351.c"	}
                                            	RETURN	
                                            ; exit point of _main
                                            

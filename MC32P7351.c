@@ -1168,7 +1168,8 @@ void main(void)
                 // tmp_bat_val += 120; // 1.05A
                 // tmp_bat_val += 140; // 
                 // tmp_bat_val += 160; // 
-                tmp_bat_val += 200; // 
+                // tmp_bat_val += 200; // 
+                tmp_bat_val += 240; // 
             }
             else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
             {
@@ -1241,7 +1242,8 @@ void main(void)
             {
                 // if (tmp_bat_val > 90)
                 u16 i;
-                for (i = 0; i < 90; i++)
+                // for (i = 0; i < 90; i++)
+                for (i = 0; i < 50; i++)
                 {
                     if (tmp_bat_val > 2)
                     {
@@ -1259,10 +1261,10 @@ void main(void)
                 // tmp_bat_val -= 80;
                 u16 i;
 
-                for (i = 0; i < 220; i++) // 660mA
+                for (i = 0; i < 220; i++) // 660mA       --- 在客户那里测试是800
                 // for (i = 0; i < 300; i++) // 610mA
                 // for (i = 0; i < 400; i++) // 550mA
-                // for (i = 0; i < 450; i++) // 500？
+                // for (i = 0; i < 450; i++) // 500？    --- 实际测试是600
                 {
                     if (tmp_bat_val > 2)
                     {
