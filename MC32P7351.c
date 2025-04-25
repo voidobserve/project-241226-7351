@@ -1145,7 +1145,9 @@ void main(void)
                 // tmp_bat_val += 140;
                 // tmp_bat_val += 200;
                 // tmp_bat_val += 300;
-                tmp_bat_val += 320;
+                // tmp_bat_val += 305;
+                tmp_bat_val += 310;
+                // tmp_bat_val += 320;
             }
             else if (adc_bat_val <= 3056) // 如果检测电池电压小于 7.0V
             {
@@ -1160,7 +1162,8 @@ void main(void)
                 // tmp_bat_val += 250; // 0.8-0.9A
                 // tmp_bat_val += 255;
                 // tmp_bat_val += 280;
-                tmp_bat_val += 300;
+                tmp_bat_val += 290;
+                // tmp_bat_val += 300;
             }
             else if (adc_bat_val <= 3188) // 如果检测电池电压小于 7.3V
             {
@@ -1173,7 +1176,8 @@ void main(void)
                 // tmp_bat_val += 200; // 
                 // tmp_bat_val += 220; // 
                 // tmp_bat_val += 240; // 
-                tmp_bat_val += 260; // 
+                tmp_bat_val += 250; // 
+                // tmp_bat_val += 260; // 
             }
             else if (adc_bat_val <= 3326) // 如果检测电池电压小于 7.62V
             {
@@ -1184,7 +1188,8 @@ void main(void)
                 // tmp_bat_val += 130;
                 // tmp_bat_val += 170;
                 // tmp_bat_val += 190;
-                tmp_bat_val += 210;
+                tmp_bat_val += 200;
+                // tmp_bat_val += 210;
             }
             else // 如果在充电时检测到电池电压大于
             // else if (adc_bat_val <= 3580) // 小于8.2V
