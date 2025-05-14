@@ -63,7 +63,7 @@
 // #define ADCDETECT_BAT_FULL (3613) // 计算得出是8.27V， 是在3666的基础上减去一定值（补偿）,实际测得是8.36V
 // #define ADCDETECT_BAT_FULL (3626) //  实际测试是8.37
 // #define ADCDETECT_BAT_FULL (3639) //  实际测试是8.39V
-#define ADCDETECT_BAT_FULL (3642) //  实际测试是 V
+#define ADCDETECT_BAT_FULL (3642) //  计算是8.34V, 实际测试是8.40 V
 // #define ADCDETECT_BAT_FULL (3644) //  实际测试是8.41V
 // #define ADCDETECT_BAT_FULL (3647) //  实际测试是 8.41V
 #define ADCDETECT_BAT_NULL_EX (280)
@@ -357,6 +357,8 @@ volatile bit_flag flag3;
 #define flag_is_needed_shut_down flag3.bits.bit4	  // 标志位，是否检测到了低电压关机，0--否，1--是，由对应的功能来执行关机
 
 #define flag_is_update_current flag3.bits.bit5 // 是否到了更新充电电流的时间
+
+#define flag_is_adjust_pwm_time_comes flag3.bits.bit6 // 是否到了调节控制充电的PWM的时间
 
 // 毫秒级延时 (误差：在1%以内，1ms、10ms、100ms延时的误差均小于1%)
 // 前提条件：FCPU = FHOSC / 4
