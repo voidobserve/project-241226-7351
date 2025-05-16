@@ -1204,8 +1204,8 @@ void main(void)
                 tmp_bat_val -= ((u32)adc_bat_val * 157 / 1000 - 522);
             }
 
-            // tmp_bat_val += 50;
-            tmp_bat_val += 60;
+            tmp_bat_val += 50;
+            // tmp_bat_val += 60;
             // tmp_bat_val += 70;
             // tmp_bat_val += 80;
             // tmp_bat_val += 90;

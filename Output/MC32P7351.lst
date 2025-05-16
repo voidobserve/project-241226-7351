@@ -1,5 +1,5 @@
 gplink-2.2.37 (Jan 22 2024)
-Listing File Generated: 2025-5-16  16:58:50
+Listing File Generated: 2025-5-16  17:00:04
  
  
 Address  Value    Disassembly              Source
@@ -1225,8 +1225,8 @@ Address  Value    Disassembly              Source
 00019f   6017     jzar    0x17             	JZAR	r0x105C
 0001a0   4a84     rsubra  0x84             	RSUBRA	(_tmp_bat_val + 1)
                                            _00821_DS_
-                                           ;	.line	1208; "MC32P7351.c"	tmp_bat_val += 60;
-0001a1   3c3c     movai   0x3c             	MOVAI	0x3c
+                                           ;	.line	1207; "MC32P7351.c"	tmp_bat_val += 50;
+0001a1   3c32     movai   0x32             	MOVAI	0x32
 0001a2   7e83     addra   0x83             	ADDRA	_tmp_bat_val
 0001a3   f187     jbclr   0x187, 0         	JBCLR	PFLAG,0
 0001a4   6684     incr    0x84             	INCR	(_tmp_bat_val + 1)
@@ -3427,7 +3427,7 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
                                            ; Version 2.0.0 (Dec 11 2019) (MINGW32)
-                                           ; This file was generated Fri May 16 16:58:49 2025
+                                           ; This file was generated Fri May 16 17:00:04 2025
                                            ;--------------------------------------------------------
                                            ; MC32 port for the RISC core
                                            ;--------------------------------------------------------
@@ -4656,8 +4656,8 @@ Address  Value    Disassembly              Source
                                            	JZAR	r0x105C
                                            	RSUBRA	(_tmp_bat_val + 1)
                                            _00821_DS_
-                                           ;	.line	1208; "MC32P7351.c"	tmp_bat_val += 60;
-                                           	MOVAI	0x3c
+                                           ;	.line	1207; "MC32P7351.c"	tmp_bat_val += 50;
+                                           	MOVAI	0x32
                                            	ADDRA	_tmp_bat_val
                                            	JBCLR	PFLAG,0
                                            	INCR	(_tmp_bat_val + 1)
