@@ -194,8 +194,8 @@ volatile u8 key_event; // 存放按键事件的变量
 // LED相关配置                                      //
 // ===================================================
 // 驱动指示灯的引脚定义
-#define LED_WORKING_PIN P14D	 // 工作指示灯
-#define LED_CHARGING_PIN P04D	 // 充电指示灯
+#define LED_WORKING_PIN P14D  // 工作指示灯
+#define LED_CHARGING_PIN P04D // 充电指示灯
 // #define LED_FULL_CHARGE_PIN P03D // 满电指示灯
 // #define LED_RED					 // 红灯
 // #define LED_GREEN				 // 绿灯
@@ -306,6 +306,9 @@ volatile u16 tmp_val_l[8];
 volatile u8 tmp_val_cnt;
 // volatile u8 flag_bat_is_empty; // 标志位，用于检测是否拔出了电池
 
+// 充电累计时间
+volatile u32 charge_time_cnt;
+
 volatile u16 tmp_bat_val;	   // 存放检测到的电池电压+计算的压差对应的adc值
 volatile u8 over_charging_cnt; // 在充电时，检测电池是否满电的计数值
 volatile u8 full_charge_cnt;   // 检测到充满电后，进行计数的变量
@@ -363,6 +366,7 @@ volatile bit_flag flag3;
 #define FLAG_BAT_IS_FULL flag1.bits.bit5		// 电池是否满电的标志位，0--未满电，1--满电
 #define FLAG_IS_NOT_OPEN_DEVICE flag1.bits.bit6 // 是否允许开机的标志位，0--允许开机，1--不允许开机（但是可以充电）
 
+#define flag_is_led_breath_disable flag1.bits.bit7 // 是否关闭充电指示灯(呼吸灯)
 // #define FLAG_DURING_CHARGING_BAT_IS_NULL flag1.bits.bit7 // 标志位，在充电时检测到电池是否为空，0--不为空，1--在充电时，电池为空
 
 #define flag_ctl_device_open flag2.bits.bit0 // 控制标志位，控制打开/关闭设备
