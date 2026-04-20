@@ -1,5 +1,5 @@
 gplink-2.2.37 (Jan 22 2024)
-Listing File Generated: 2026-4-20  08:36:13
+Listing File Generated: 2026-4-20  08:39:44
  
  
 Address  Value    Disassembly              Source
@@ -2611,11 +2611,11 @@ Address  Value    Disassembly              Source
 000506   5c8c     orar    0x8c             	ORAR	_mode_flag
 000507   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
 000508   a511     goto    0x511            	GOTO	_00362_DS_
-                                           ;	.line	438; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 90 / 100);
-000509   3c9a     movai   0x9a             	MOVAI	0x9a
+                                           ;	.line	438; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 87 / 100);
+000509   3c95     movai   0x95             	MOVAI	0x95
 00050a   579b     movra   0x19b            	MOVRA	_T0DATA
-                                           ;	.line	439; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 90 / 100);
-00050b   3c9a     movai   0x9a             	MOVAI	0x9a
+                                           ;	.line	439; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 87 / 100);
+00050b   3c95     movai   0x95             	MOVAI	0x95
 00050c   579f     movra   0x19f            	MOVRA	_T1DATA
                                            ;	.line	441; "MC32P7351.c"	mode_flag = MODE_2;
 00050d   3c01     movai   0x1              	MOVAI	0x01
@@ -2668,11 +2668,11 @@ Address  Value    Disassembly              Source
 00052b   3903     xorai   0x3              	XORAI	0x03
 00052c   e587     jbset   0x187, 0x2       	JBSET	PFLAG,2
 00052d   a536     goto    0x536            	GOTO	_00363_DS_
-                                           ;	.line	471; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 83 / 100);
-00052e   3c8e     movai   0x8e             	MOVAI	0x8e
+                                           ;	.line	471; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 80 / 100);
+00052e   3c89     movai   0x89             	MOVAI	0x89
 00052f   579b     movra   0x19b            	MOVRA	_T0DATA
-                                           ;	.line	472; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 83 / 100);
-000530   3c8e     movai   0x8e             	MOVAI	0x8e
+                                           ;	.line	472; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 80 / 100);
+000530   3c89     movai   0x89             	MOVAI	0x89
 000531   579f     movra   0x19f            	MOVRA	_T1DATA
                                            ;	.line	473; "MC32P7351.c"	mode_flag = MODE_1;
 000532   768c     clrr    0x8c             	CLRR	_mode_flag
@@ -2730,11 +2730,11 @@ Address  Value    Disassembly              Source
 000552   d994     bclr    0x194, 0x4       	BCLR	_IOP1bits,4
                                            ;	.line	507; "MC32P7351.c"	FLAG_IS_DEVICE_OPEN = 1;
 000553   c095     bset    0x95, 0          	BSET	_flag1,0
-                                           ;	.line	513; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 83 / 100);
-000554   3c8e     movai   0x8e             	MOVAI	0x8e
+                                           ;	.line	513; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 80 / 100);
+000554   3c89     movai   0x89             	MOVAI	0x89
 000555   579b     movra   0x19b            	MOVRA	_T0DATA
-                                           ;	.line	514; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 83 / 100);
-000556   3c8e     movai   0x8e             	MOVAI	0x8e
+                                           ;	.line	514; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 80 / 100);
+000556   3c89     movai   0x89             	MOVAI	0x89
 000557   579f     movra   0x19f            	MOVRA	_T1DATA
                                            ;	.line	515; "MC32P7351.c"	mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
 000558   768c     clrr    0x8c             	CLRR	_mode_flag
@@ -3474,7 +3474,7 @@ Address  Value    Disassembly              Source
                                            ;--------------------------------------------------------
                                            ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
                                            ; Version 2.0.0 (Dec 11 2019) (MINGW32)
-                                           ; This file was generated Mon Apr 20 08:36:13 2026
+                                           ; This file was generated Mon Apr 20 08:39:44 2026
                                            ;--------------------------------------------------------
                                            ; MC32 port for the RISC core
                                            ;--------------------------------------------------------
@@ -6089,11 +6089,11 @@ Address  Value    Disassembly              Source
                                            	ORAR	_mode_flag
                                            	JBSET	PFLAG,2
                                            	GOTO	_00362_DS_
-                                           ;	.line	438; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 90 / 100);
-                                           	MOVAI	0x9a
+                                           ;	.line	438; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 87 / 100);
+                                           	MOVAI	0x95
                                            	MOVRA	_T0DATA
-                                           ;	.line	439; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 90 / 100);
-                                           	MOVAI	0x9a
+                                           ;	.line	439; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 87 / 100);
+                                           	MOVAI	0x95
                                            	MOVRA	_T1DATA
                                            ;	.line	441; "MC32P7351.c"	mode_flag = MODE_2;
                                            	MOVAI	0x01
@@ -6146,11 +6146,11 @@ Address  Value    Disassembly              Source
                                            	XORAI	0x03
                                            	JBSET	PFLAG,2
                                            	GOTO	_00363_DS_
-                                           ;	.line	471; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 83 / 100);
-                                           	MOVAI	0x8e
+                                           ;	.line	471; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 80 / 100);
+                                           	MOVAI	0x89
                                            	MOVRA	_T0DATA
-                                           ;	.line	472; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 83 / 100);
-                                           	MOVAI	0x8e
+                                           ;	.line	472; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 80 / 100);
+                                           	MOVAI	0x89
                                            	MOVRA	_T1DATA
                                            ;	.line	473; "MC32P7351.c"	mode_flag = MODE_1;
                                            	CLRR	_mode_flag
@@ -6208,11 +6208,11 @@ Address  Value    Disassembly              Source
                                            	BCLR	_IOP1bits,4
                                            ;	.line	507; "MC32P7351.c"	FLAG_IS_DEVICE_OPEN = 1;
                                            	BSET	_flag1,0
-                                           ;	.line	513; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 83 / 100);
-                                           	MOVAI	0x8e
+                                           ;	.line	513; "MC32P7351.c"	T0DATA = (u8)((u32)172 * 80 / 100);
+                                           	MOVAI	0x89
                                            	MOVRA	_T0DATA
-                                           ;	.line	514; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 83 / 100);
-                                           	MOVAI	0x8e
+                                           ;	.line	514; "MC32P7351.c"	T1DATA = (u8)((u32)172 * 80 / 100);
+                                           	MOVAI	0x89
                                            	MOVRA	_T1DATA
                                            ;	.line	515; "MC32P7351.c"	mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
                                            	CLRR	_mode_flag

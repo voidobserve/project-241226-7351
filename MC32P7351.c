@@ -435,8 +435,8 @@ void key_event_handle(void)
                 // T0DATA = 160;
                 // T1DATA = 160;
 
-                T0DATA = (u8)((u32)172 * 90 / 100);
-                T1DATA = (u8)((u32)172 * 90 / 100);
+                T0DATA = (u8)((u32)172 * 87 / 100);
+                T1DATA = (u8)((u32)172 * 87 / 100);
 
                 mode_flag = MODE_2;
                 flag_ctl_dir = 1;
@@ -468,8 +468,8 @@ void key_event_handle(void)
                 // T0DATA = 150;
                 // T1DATA = 150;
 
-                T0DATA = (u8)((u32)172 * 83 / 100);
-                T1DATA = (u8)((u32)172 * 83 / 100);
+                T0DATA = (u8)((u32)172 * 80 / 100);
+                T1DATA = (u8)((u32)172 * 80 / 100);
                 mode_flag = MODE_1;
                 flag_ctl_dir = 1;
 
@@ -510,8 +510,8 @@ void key_event_handle(void)
             // T0DATA = 150;
             // T1DATA = 150;
 
-            T0DATA = (u8)((u32)172 * 83 / 100);
-            T1DATA = (u8)((u32)172 * 83 / 100);
+            T0DATA = (u8)((u32)172 * 80 / 100);
+            T1DATA = (u8)((u32)172 * 80 / 100);
             mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
 
             // // 打开控制正转的PWM
