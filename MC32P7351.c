@@ -432,8 +432,11 @@ void key_event_handle(void)
             if (MODE_1 == mode_flag)
             {
                 // 设置PWM的占空比
-                T0DATA = 160;
-                T1DATA = 160;
+                // T0DATA = 160;
+                // T1DATA = 160;
+
+                T0DATA = (u8)((u32)172 * 90 / 100);
+                T1DATA = (u8)((u32)172 * 90 / 100);
 
                 mode_flag = MODE_2;
                 flag_ctl_dir = 1;
@@ -462,8 +465,11 @@ void key_event_handle(void)
             {
                 // PWM0EC = 1;
                 // PWM1EC = 1;
-                T0DATA = 150;
-                T1DATA = 150;
+                // T0DATA = 150;
+                // T1DATA = 150;
+
+                T0DATA = (u8)((u32)172 * 83 / 100);
+                T1DATA = (u8)((u32)172 * 83 / 100);
                 mode_flag = MODE_1;
                 flag_ctl_dir = 1;
 
@@ -501,8 +507,11 @@ void key_event_handle(void)
             FLAG_IS_DEVICE_OPEN = 1;
 
             // 设定正转、反转的PWM的初始占空比
-            T0DATA = 150;
-            T1DATA = 150;
+            // T0DATA = 150;
+            // T1DATA = 150;
+
+            T0DATA = (u8)((u32)172 * 83 / 100);
+            T1DATA = (u8)((u32)172 * 83 / 100);
             mode_flag = MODE_1; // 下一次切换模式时，会变成 MODE_2
 
             // // 打开控制正转的PWM
